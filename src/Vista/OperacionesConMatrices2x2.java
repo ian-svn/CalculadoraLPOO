@@ -110,13 +110,11 @@ public class OperacionesConMatrices2x2 {
 		Est.CompOvalColorEstandar(devuelta);
 		devuelta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Input01.setVisible(true);
-				Input10.setVisible(true);
-				Input11.setVisible(true);
+				reset();
 				devuelta.setVisible(false);
-				modo=0;
-				count=0;
-				Input00.setBackground(new Color(150,150,150));
+				Input11.setVisible(true);
+				Input10.setVisible(true);
+				Input01.setVisible(true);
 			}
 		});
 		devuelta.setOpaque(false);
@@ -129,6 +127,7 @@ public class OperacionesConMatrices2x2 {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				Input00.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				devuelta.doClick();
 			}
 		});
 		Input00.setBounds(80, 131, 83, 29);
@@ -145,6 +144,8 @@ public class OperacionesConMatrices2x2 {
 				modo=1;
 				Input11.setVisible(false);
 				Input10.setVisible(false);
+				Input10.setText("");
+				Input11.setText("");
 				devuelta.setVisible(true);
 			}
 			@Override
@@ -162,7 +163,9 @@ public class OperacionesConMatrices2x2 {
 			public void mouseClicked(MouseEvent e) {
 				modo=2;
 				Input01.setVisible(false);
+				Input01.setText("");
 				Input11.setVisible(false);
+				Input11.setText("");
 				devuelta.setVisible(true);
 			}
 			@Override
@@ -616,7 +619,7 @@ public class OperacionesConMatrices2x2 {
 				igual.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 
-						double MatrizResultado[][] = multicplicacionPorEscalarMatriz(matriz1,Double.parseDouble(InputPE.getText()));
+						double MatrizResultado[][] = multiplicacionEscalarMatriz(matriz1,Double.parseDouble(InputPE.getText()));
 						InputPE.setText("");
 						
 						mostrarResultados(MatrizResultado);
@@ -725,7 +728,7 @@ public class OperacionesConMatrices2x2 {
 						if(InputPE.getText().length()==0) {
 							return;
 						}
-						double MatrizResultado[][] = multicplicacionPorEscalarMatriz(matriz2,Double.parseDouble(InputPE.getText()));
+						double MatrizResultado[][] = multiplicacionEscalarMatriz(matriz2,Double.parseDouble(InputPE.getText()));
 						InputPE.setText("");
 						
 						mostrarResultados(MatrizResultado);
@@ -1052,23 +1055,6 @@ public class OperacionesConMatrices2x2 {
 					LMatriz1.setVisible(true);
 					LMatriz2.setVisible(true);
 					
-					
-					for (int i = 0; i < matriz1.length; i++) {          // Iterar sobre las filas
-			            for (int j = 0; j < matriz1[i].length; j++) {   // Iterar sobre las columnas
-			                System.out.print(matriz1[i][j] + " ");      // Imprimir cada elemento seguido de un espacio
-			            }
-			            System.out.println();                          // Nueva línea después de cada fila
-			        }
-					System.out.println("");
-					System.out.println("");
-					
-					for (int i = 0; i < matriz2.length; i++) {          // Iterar sobre las filas
-			            for (int j = 0; j < matriz2[i].length; j++) {   // Iterar sobre las columnas
-			                System.out.print(matriz2[i][j] + " ");      // Imprimir cada elemento seguido de un espacio
-			            }
-			            System.out.println();                          // Nueva línea después de cada fila
-			        }
-					
 					return;
 					
 					
@@ -1179,10 +1165,7 @@ public class OperacionesConMatrices2x2 {
 			Ac.setBackground(new Color(180,0,0));
 			Ac.addHover(new Color(230,0,0));
 		} else if(AcCount>1) {
-			Input00.setText("");
-			Input01.setText("");
-			Input10.setText("");
-			Input11.setText("");
+			reset();
 			Est.CompOvalColorEstandar(Ac);
 		}
 	}
@@ -1228,17 +1211,18 @@ public class OperacionesConMatrices2x2 {
 	    return result;
 	}
 	
-	public static double[][] multicplicacionPorEscalarMatriz(double[][] matrix, double scalar) {
-	    int rows = matrix.length;
-	    int cols = matrix[0].length;
-	    double[][] result = new double[rows][cols];
-	    for (int i = 0; i < rows; i++) {
-	        for (int j = 0; j < cols; j++) {
-	            result[i][j] = matrix[i][j] * scalar;
-	        }
-	    }
-	    return result;
-	}
+	public static double[][] multiplicacionEscalarMatriz(double[][] matriz, double escalar) {
+		int filas = matriz.length;
+        int columnas = matriz[0].length;
+        double[][] resultado = new double[filas][columnas];
+
+        for (int i = 0; i < filas; i++) {
+            for (int j = 0; j < columnas; j++) {
+                resultado[i][j] = escalar * matriz[i][j];
+            }
+        }
+        return resultado;
+    }
 	
     public double[][] multiplicacionDeMatrices(double[][] a, double[][] b) {
         int rowsA = a.length;
@@ -1329,10 +1313,6 @@ public class OperacionesConMatrices2x2 {
         return inverse;
     }
     
-    public void vaciarResultados() {
-    	Resultado.setText("");
-    	Resultado2.setText("");
-    }
     public void mostrarResultados(double[][] matriz) {
     	vaciarResultados();
     	for (int i = 0; i < matriz.length; i++) {         
@@ -1354,5 +1334,28 @@ public class OperacionesConMatrices2x2 {
     	int decimals = 2;
         double scale = Math.pow(10, decimals);
         return Math.round(value * scale) / scale;
+    }
+    
+	public void reset() {
+		Input00.setText("");
+		Input00.setBackground(new Color(150,150,150));
+		Input01.setText("");
+		Input01.setBackground(Color.GRAY);
+		
+		Input10.setText("");
+		Input10.setBackground(Color.GRAY);
+		
+		Input11.setText("");
+		Input11.setBackground(Color.GRAY);
+		
+		count=0;
+		modo=0;
+		
+		usarTextField();
+	}
+	
+	public void vaciarResultados() {
+    	Resultado.setText("");
+    	Resultado2.setText("");
     }
 }

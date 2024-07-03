@@ -27,25 +27,36 @@ public class OperacionesConMatrices3x3 {
 	private JFrame frame;
 	private Estandar Est = new Estandar();
 	private JComponentOvalTF textField;
-	private JComponentOvalTF Input00 = new JComponentOvalTF(5);
-	private JComponentOvalTF Input10 = new JComponentOvalTF(5);
-	private JComponentOvalTF Input01 = new JComponentOvalTF(5);
-	private JComponentOvalTF Input11 = new JComponentOvalTF(5);
 	private JComponentOval Ac = new JComponentOval(10);
 	private JComponentOvalTF Resultado = new JComponentOvalTF(0);
 	private JComponentOvalTF Resultado2 = new JComponentOvalTF(0);
+	private JComponentOvalTF Resultado3 = new JComponentOvalTF(0);
 	private int cantVecesIgual = 0;
 	private int count = 0;
 	private int AcCount = 0;
-	private int comaCount = 0;
+	private int modo = 0;
 	
 
+	private JComponentOvalTF Input00 = new JComponentOvalTF(5);
+	private JComponentOvalTF Input01 = new JComponentOvalTF(5);
+	private JComponentOvalTF Input02 = new JComponentOvalTF(5);
+	
+	private JComponentOvalTF Input10 = new JComponentOvalTF(5);
+	private JComponentOvalTF Input11 = new JComponentOvalTF(5);
+	private JComponentOvalTF Input12 = new JComponentOvalTF(5);
+	
+	private JComponentOvalTF Input20 = new JComponentOvalTF(5);
+	private JComponentOvalTF Input21 = new JComponentOvalTF(5);
+	private JComponentOvalTF Input22 = new JComponentOvalTF(5);
+	
 	private JLabel LMatriz1 = new JLabel("Matriz 1");
     private JComponentOval devuelta = new JComponentOval(10);
 	private JComponentOvalTF TFmatriz1_1 = new JComponentOvalTF(0);
 	private JComponentOvalTF TFmatriz1_2 = new JComponentOvalTF(0);
+	private JComponentOvalTF TFmatriz1_3 = new JComponentOvalTF(0);
 	private JComponentOvalTF TFmatriz2_1 = new JComponentOvalTF(0);
 	private JComponentOvalTF TFmatriz2_2 = new JComponentOvalTF(0);
+	private JComponentOvalTF TFmatriz2_3 = new JComponentOvalTF(0);
 	private JComponentOval Restablecer = new JComponentOval(10);
 	private JComponentOval Inversa = new JComponentOval(5);
 	private JComponentOval Inversa2 = new JComponentOval(5);
@@ -55,10 +66,8 @@ public class OperacionesConMatrices3x3 {
 	private JComponentOvalTF InputPE = new JComponentOvalTF(10);
 	private JComponentOval igual = new JComponentOval(10);
 	private JLabel LMatriz2 = new JLabel("Matriz 2");
-	
-	private int modo = 0;
-	private double[][] matriz1;
-	private double[][] matriz2;
+	private Double[][] matriz1;
+	private Double[][] matriz2;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -111,80 +120,23 @@ public class OperacionesConMatrices3x3 {
 		devuelta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Input01.setVisible(true);
+				Input02.setVisible(true);
 				Input10.setVisible(true);
 				Input11.setVisible(true);
+				Input12.setVisible(true);
+				Input20.setVisible(true);
+				Input21.setVisible(true);
+				Input22.setVisible(true);
+				reset();
 				devuelta.setVisible(false);
-				modo=0;
-				count=0;
-				Input00.setBackground(new Color(150,150,150));
 			}
 		});
 		devuelta.setOpaque(false);
-		devuelta.setBounds(261, 91, 63, 29);
+		devuelta.setBounds(282, 42, 63, 29);
 		devuelta.setVisible(false);
 		frame.getContentPane().add(devuelta);
 		
 		frame.getContentPane().add(CalculoResuelto, BorderLayout.NORTH);
-		Input00.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				Input00.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-			}
-		});
-		Input00.setBounds(80, 131, 83, 29);
-		Input00.setFocusTraversalKeysEnabled(false);
-		Input00.setHorizontalAlignment(SwingConstants.CENTER);
-		Input00.addHover();
-		Input00.setBackground(new Color(150,150,150));
-		frame.getContentPane().add(Input00);
-		
-		Input01.setBounds(192, 131, 83, 29);
-		Input01.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				modo=1;
-				Input11.setVisible(false);
-				Input10.setVisible(false);
-				devuelta.setVisible(true);
-			}
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				Input01.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-			}
-		});
-		Input01.setHorizontalAlignment(SwingConstants.CENTER);
-		Input01.addHover();
-		frame.getContentPane().add(Input01);
-		Input10.setBounds(80, 177, 83, 29);
-		Input10.setHorizontalAlignment(SwingConstants.CENTER);
-		Input10.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				modo=2;
-				Input01.setVisible(false);
-				Input11.setVisible(false);
-				devuelta.setVisible(true);
-			}
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				Input10.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-			}
-		});
-		frame.getContentPane().add(Input10);
-		Input11.setBounds(192, 177, 83, 29);
-		Input11.setHorizontalAlignment(SwingConstants.CENTER);
-		Input11.addHover();
-		Input11.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-			}
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				Input11.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-			}
-		});
-		frame.getContentPane().add(Input11);
 
 
 		
@@ -378,32 +330,8 @@ public class OperacionesConMatrices3x3 {
 		JLabel AvisoMatriz = new JLabel("Primera matriz:");
 		AvisoMatriz.setForeground(Color.WHITE);
 		AvisoMatriz.setFont(new Font("Calibri", Font.BOLD, 20));
-		AvisoMatriz.setBounds(23, 78, 161, 20);
+		AvisoMatriz.setBounds(20, 60, 161, 20);
 		frame.getContentPane().add(AvisoMatriz);
-		
-		JComponentOval punto = new JComponentOval(10);
-		punto.setBounds(114, 315, 136, 40);
-		punto.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				textField = usarTextField();
-				
-				if(textField.getText().length()==0) {
-					return;
-				}
-				int dim = textField.getText().length();
-				if(textField.getText().charAt(dim-1)==' '||textField.getText().charAt(dim-1)=='.') {
-					return;
-				}
-				if(comaCount!=0) {
-					return;
-				}
-				comaCount++;
-				textField.setText(textField.getText() + ".");
-			}
-		});
-		punto.setText(".");
-		punto.setForeground(Color.WHITE);
-		punto.setFont(new Font("Calibri", Font.BOLD, 17));
 		
 		Ac.setBounds(261, 245, 59, 29);
 		Est.CompOvalColorEstandar(Ac);
@@ -447,7 +375,7 @@ public class OperacionesConMatrices3x3 {
 		siguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				resetAc();
-				comaCount=0;
+
 				aviso_1.setVisible(false);
 				aviso_2.setVisible(false);
 				usarTextField().setBackground((Color.GRAY));
@@ -464,7 +392,7 @@ public class OperacionesConMatrices3x3 {
 		anterior.setBackground(Color.GRAY);
 		anterior.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				comaCount=0;
+
 				resetAc();
 				aviso_1.setVisible(false);
 				aviso_2.setVisible(false);
@@ -488,19 +416,25 @@ public class OperacionesConMatrices3x3 {
 
 		JComponentOvalP PanelResultado = new JComponentOvalP(10);
 		PanelResultado.setVisible(false);
-		PanelResultado.setBounds(80, 112, 199, 94);
+		PanelResultado.setBounds(66, 91, 240, 132);
 		frame.getContentPane().add(PanelResultado);
 		PanelResultado.setLayout(null);
 		Resultado.setFont(new Font("Calibri", Font.BOLD, 20));
 		Resultado.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		Resultado.setBounds(10, 11, 179, 38);
+		Resultado.setBounds(10, 11, 220, 38);
 		PanelResultado.add(Resultado);
 
 		Resultado2.setFont(new Font("Calibri", Font.BOLD, 20));
 		Resultado2.setHorizontalAlignment(SwingConstants.CENTER);
-		Resultado2.setBounds(10, 48, 179, 38);
+		Resultado2.setBounds(10, 48, 220, 38);
 		PanelResultado.add(Resultado2);
+		
+		Resultado3.setHorizontalAlignment(SwingConstants.CENTER);
+		Resultado3.setFont(new Font("Calibri", Font.BOLD, 20));
+		Resultado3.setBounds(10, 85, 220, 38);
+		PanelResultado.add(Resultado3);
+		
 		
 		JComponentOval Suma = new JComponentOval(5);
 		Suma.setFont(new Font("Calibri", Font.BOLD, 16));
@@ -509,7 +443,7 @@ public class OperacionesConMatrices3x3 {
 				if(sumaMatrices(matriz1,matriz2)==null) {
 					return;
 				}
-				double[][] matriz = sumaMatrices(matriz1,matriz2);
+				Double[][] matriz = sumaMatrices(matriz1,matriz2);
 				mostrarResultados(matriz);
 				
 //				Resultado1.setText(String.valueOf(sumaMatrices(matriz1,matriz2)));;
@@ -527,7 +461,7 @@ public class OperacionesConMatrices3x3 {
 				if(restaMatrices(matriz1,matriz2)==null) {
 					return;
 				}
-				double[][] matriz = restaMatrices(matriz1,matriz2);
+				Double[][] matriz = restaMatrices(matriz1,matriz2);
 				mostrarResultados(matriz);
 					
 //					Resultado1.setText(String.valueOf(sumaMatrices(matriz1,matriz2)));;
@@ -542,10 +476,10 @@ public class OperacionesConMatrices3x3 {
 		Multiplicar.setFont(new Font("Calibri", Font.BOLD, 16));
 		Multiplicar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-					if(multiplicacionDeMatrices(matriz1,matriz2)==null) {
+					if(multiplicacionMatrices(matriz1,matriz2)==null) {
 						return;
 					}
-					mostrarResultados(multiplicacionDeMatrices(matriz1,matriz2));
+					mostrarResultados(multiplicacionMatrices(matriz1,matriz2));
 				}
 		});
 		Multiplicar.setVisible(false);
@@ -557,10 +491,10 @@ public class OperacionesConMatrices3x3 {
 		Division.setFont(new Font("Calibri", Font.BOLD, 16));
 		Division.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(dividirMatrices(matriz1,matriz2)==null) {
+				if(divisionMatrices(matriz1,matriz2)==null) {
 					return;
 				}
-				double[][] matriz = dividirMatrices(matriz1,matriz2);
+				Double[][] matriz = divisionMatrices(matriz1,matriz2);
 				mostrarResultados(matriz);
 			}
 	});
@@ -573,7 +507,8 @@ public class OperacionesConMatrices3x3 {
 		MultiEscalar1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				modo=6;
+				modo=11;
+				usarTextField();
 				
 				InputPE.setVisible(true);
 				
@@ -589,7 +524,6 @@ public class OperacionesConMatrices3x3 {
 				Nueve.setVisible(true);
 				Cero.setVisible(true);
 				Del.setVisible(true);
-				punto.setVisible(true);
 				Ac.setVisible(true);
 				Suma.setVisible(false);
 				Resta.setVisible(false);
@@ -605,8 +539,10 @@ public class OperacionesConMatrices3x3 {
 				Restablecer.setVisible(false);
 				TFmatriz1_1.setVisible(false);
 				TFmatriz1_2.setVisible(false);
+				TFmatriz2_3.setVisible(true);
 				TFmatriz2_1.setVisible(false);
 				TFmatriz2_2.setVisible(false);
+				TFmatriz2_3.setVisible(true);
 				LMatriz1.setVisible(false);
 				LMatriz2.setVisible(false);
 				
@@ -616,7 +552,7 @@ public class OperacionesConMatrices3x3 {
 				igual.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 
-						double MatrizResultado[][] = multicplicacionPorEscalarMatriz(matriz1,Double.parseDouble(InputPE.getText()));
+						Double MatrizResultado[][] = multiplicacionEscalarMatriz(matriz1,Double.parseDouble(InputPE.getText()));
 						InputPE.setText("");
 						
 						mostrarResultados(MatrizResultado);
@@ -639,7 +575,6 @@ public class OperacionesConMatrices3x3 {
 						anterior.setVisible(false);
 						Ac.setVisible(false);
 						Del.setVisible(false);
-						punto.setVisible(false);
 						AvisoMatriz.setVisible(false);
 						Input00.setVisible(false);
 						Input01.setVisible(false);
@@ -661,13 +596,14 @@ public class OperacionesConMatrices3x3 {
 						Restablecer.setVisible(true);
 						TFmatriz1_1.setVisible(true);
 						TFmatriz1_2.setVisible(true);
+						TFmatriz2_3.setVisible(true);
 						TFmatriz2_1.setVisible(true);
 						TFmatriz2_2.setVisible(true);
+						TFmatriz2_3.setVisible(true);
 						LMatriz1.setVisible(true);
 						LMatriz2.setVisible(true);
 					}
 				});
-				
 			}
 		});
 		MultiEscalar1.setFont(new Font("Calibri", Font.BOLD, 16));
@@ -680,7 +616,8 @@ public class OperacionesConMatrices3x3 {
 		MultiEscalar2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				modo=6;
+				modo=11;
+				usarTextField();
 				
 				InputPE.setVisible(true);
 				
@@ -696,7 +633,6 @@ public class OperacionesConMatrices3x3 {
 				Nueve.setVisible(true);
 				Cero.setVisible(true);
 				Del.setVisible(true);
-				punto.setVisible(true);
 				Ac.setVisible(true);
 				Suma.setVisible(false);
 				Resta.setVisible(false);
@@ -712,8 +648,10 @@ public class OperacionesConMatrices3x3 {
 				Restablecer.setVisible(false);
 				TFmatriz1_1.setVisible(false);
 				TFmatriz1_2.setVisible(false);
+				TFmatriz1_3.setVisible(false);
 				TFmatriz2_1.setVisible(false);
 				TFmatriz2_2.setVisible(false);
+				TFmatriz1_3.setVisible(false);
 				LMatriz1.setVisible(false);
 				LMatriz2.setVisible(false);
 				
@@ -725,7 +663,7 @@ public class OperacionesConMatrices3x3 {
 						if(InputPE.getText().length()==0) {
 							return;
 						}
-						double MatrizResultado[][] = multicplicacionPorEscalarMatriz(matriz2,Double.parseDouble(InputPE.getText()));
+						Double MatrizResultado[][] = multiplicacionEscalarMatriz(matriz2,Double.parseDouble(InputPE.getText()));
 						InputPE.setText("");
 						
 						mostrarResultados(MatrizResultado);
@@ -748,7 +686,6 @@ public class OperacionesConMatrices3x3 {
 						anterior.setVisible(false);
 						Ac.setVisible(false);
 						Del.setVisible(false);
-						punto.setVisible(false);
 						AvisoMatriz.setVisible(false);
 						Input00.setVisible(false);
 						Input01.setVisible(false);
@@ -770,13 +707,14 @@ public class OperacionesConMatrices3x3 {
 						Restablecer.setVisible(true);
 						TFmatriz1_1.setVisible(true);
 						TFmatriz1_2.setVisible(true);
+						TFmatriz1_3.setVisible(true);
 						TFmatriz2_1.setVisible(true);
 						TFmatriz2_2.setVisible(true);
+						TFmatriz1_3.setVisible(true);
 						LMatriz1.setVisible(true);
 						LMatriz2.setVisible(true);
 					}
 				});
-				
 			}
 		});
 		MultiEscalar2.setVisible(false);
@@ -787,13 +725,13 @@ public class OperacionesConMatrices3x3 {
 		Determinante.setFont(new Font("Calibri", Font.BOLD, 16));
 		Determinante.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(determinant2x2(matriz1)==null) {
+				Double determinante = determinanteMatriz(matriz1);
+				if(determinante==null) {
 					return;
 				}
-				Double determinante = determinant2x2(matriz1);
-				
 				Resultado.setText(String.valueOf(roundToDecimals(determinante)));
 				Resultado2.setText("");
+				Resultado3.setText("");
 			}
 		});
 		Determinante.setVisible(false);
@@ -804,12 +742,13 @@ public class OperacionesConMatrices3x3 {
 		Determinante2.setFont(new Font("Calibri", Font.BOLD, 16));
 		Determinante2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(determinant2x2(matriz2)==null) {
+				if(determinanteMatriz(matriz2)==null) {
 					return;
 				}
-				Double determinante = determinant2x2(matriz2);
+				Double determinante = determinanteMatriz(matriz2);
 				Resultado.setText(String.valueOf(roundToDecimals(determinante)));
 				Resultado2.setText("");
+				Resultado3.setText("");
 			}
 		});
 		Determinante2.setVisible(false);
@@ -820,10 +759,10 @@ public class OperacionesConMatrices3x3 {
 		Inversa.setFont(new Font("Calibri", Font.BOLD, 16));
 		Inversa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(inverse2x2(matriz1)==null) {
+				if(inversaMatriz(matriz1)==null) {
 					return;
 				}
-				double[][] matriz = inverse2x2(matriz1);
+				Double[][] matriz = inversaMatriz(matriz1);
 				mostrarResultados(matriz);
 			}
 		});
@@ -835,10 +774,10 @@ public class OperacionesConMatrices3x3 {
 		Inversa2.setFont(new Font("Calibri", Font.BOLD, 16));
 		Inversa2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(inverse2x2(matriz2)==null) {
+				if(inversaMatriz(matriz2)==null) {
 					return;
 				}
-				double[][] matriz = inverse2x2(matriz2);
+				Double[][] matriz = inversaMatriz(matriz2);
 				mostrarResultados(matriz);
 			}
 		});
@@ -850,7 +789,7 @@ public class OperacionesConMatrices3x3 {
 		Restablecer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.setVisible(false);
-				OperacionesConMatrices2x2 operaciones = new OperacionesConMatrices2x2();
+				OperacionesConMatrices3x3 operaciones = new OperacionesConMatrices3x3();
 				operaciones.correr();
 			}
 		});
@@ -859,30 +798,30 @@ public class OperacionesConMatrices3x3 {
 		Est.CompOvalColorEstandar(Restablecer);
 		Restablecer.setBounds(308, 11, 46, 29);
 		frame.getContentPane().add(Restablecer);
-		
-		TFmatriz1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		TFmatriz1_1.setVisible(false);
 		TFmatriz1_1.setBackground(Color.DARK_GRAY);
-		TFmatriz1_1.setBounds(73, 28, 90, 15);
+		TFmatriz1_1.setBounds(86, 11, 90, 15);
 		frame.getContentPane().add(TFmatriz1_1);
-
-		TFmatriz1_2.setHorizontalAlignment(SwingConstants.CENTER);
 		TFmatriz1_2.setVisible(false);
 		TFmatriz1_2.setBackground(Color.DARK_GRAY);
-		TFmatriz1_2.setBounds(73, 46, 90, 15);
+		TFmatriz1_2.setBounds(86, 29, 90, 15);
 		frame.getContentPane().add(TFmatriz1_2);
-		
-		TFmatriz2_1.setHorizontalAlignment(SwingConstants.CENTER);
+		TFmatriz1_3.setVisible(false);
+		TFmatriz1_3.setBackground(Color.DARK_GRAY);
+		TFmatriz1_3.setBounds(86, 50, 90, 13);
+		frame.getContentPane().add(TFmatriz1_3);
 		TFmatriz2_1.setVisible(false);
 		TFmatriz2_1.setBackground(Color.DARK_GRAY);
-		TFmatriz2_1.setBounds(217, 28, 90, 15);
+		TFmatriz2_1.setBounds(230, 11, 90, 15);
 		frame.getContentPane().add(TFmatriz2_1);
-		
-		TFmatriz2_2.setHorizontalAlignment(SwingConstants.CENTER);
 		TFmatriz2_2.setVisible(false);
 		TFmatriz2_2.setBackground(Color.DARK_GRAY);
-		TFmatriz2_2.setBounds(217, 46, 90, 13);
+		TFmatriz2_2.setBounds(230, 29, 90, 13);
 		frame.getContentPane().add(TFmatriz2_2);
+		TFmatriz2_3.setVisible(false);
+		TFmatriz2_3.setBackground(Color.DARK_GRAY);
+		TFmatriz2_3.setBounds(230, 50, 90, 13);
+		frame.getContentPane().add(TFmatriz2_3);
 		
 		LMatriz1.setHorizontalAlignment(SwingConstants.CENTER);
 		LMatriz1.setFont(new Font("Calibri", Font.BOLD, 14));
@@ -904,85 +843,87 @@ public class OperacionesConMatrices3x3 {
 		Est.CompOvalColorEstandar(igual);
 		igual.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(Input00.getText().length()!=0&&Input10.getText().length()!=0&&Input01.getText().length()==0&&Input11.getText().length()==0) {
-					modo=1;
-				}
-				if(Input00.getText().length()!=0&&Input10.getText().length()==0&&Input01.getText().length()!=0&&Input11.getText().length()==0) {
-					modo=2;
-				}
-				if(Input00.getText().length()!=0&&Input10.getText().length()!=0&&Input01.getText().length()!=0&&Input11.getText().length()==0) {
-					return;
-				}
-				if((modo==0 || modo==3) && (Input00.getText().length()==0||Input10.getText().length()==0||Input01.getText().length()==0||Input11.getText().length()==0)) {
-					return;
-				}
 				
-
-				usarTextField().setBackground((Color.GRAY));
-				count=0;
-				usarTextField().setBackground(new Color(150,150,150));
+				if(			Input00.getText().length()!=0&&Input01.getText().length()!=0&&Input02.getText().length()!=0&&
+							Input10.getText().length()==0&&Input11.getText().length()==0&&Input12.getText().length()==0&&
+							Input20.getText().length()==0&&Input21.getText().length()==0&&Input22.getText().length()==0) {		
+						modo=1;
+					}
+				
+				else if(	Input00.getText().length()!=0&&Input01.getText().length()!=0&&Input02.getText().length()!=0&&
+							Input10.getText().length()!=0&&Input11.getText().length()!=0&&Input12.getText().length()!=0&&
+							Input20.getText().length()==0&&Input21.getText().length()==0&&Input22.getText().length()==0) {
+						modo=2;
+					}
+				
+				else if( 	Input00.getText().length()!=0 && Input01.getText().length()==0 && Input02.getText().length()==0&&
+						 	Input10.getText().length()!=0 && Input11.getText().length()==0 && Input12.getText().length()==0&&
+						 	Input20.getText().length()!=0 && Input21.getText().length()==0 && Input22.getText().length()==0) {	
+						modo=3;
+					}
+				
+				else if( 	Input00.getText().length()!=0 && Input01.getText().length()!=0 && Input02.getText().length()==0&&
+						 	Input10.getText().length()!=0 && Input11.getText().length()!=0 && Input12.getText().length()==0&&
+						 	Input20.getText().length()!=0 && Input21.getText().length()!=0 && Input22.getText().length()==0) {	
+						modo=4;
+					}
+				else if(	Input00.getText().length()!=0&&Input01.getText().length()!=0&&Input02.getText().length()!=0&&
+							Input10.getText().length()!=0&&Input11.getText().length()!=0&&Input12.getText().length()!=0&&
+							Input20.getText().length()!=0&&Input21.getText().length()!=0&&Input22.getText().length()!=0) {		
+						modo=5;
+					}
+				else {
+					return;
+				}
 				
 				cantVecesIgual++;
+				
 				if(cantVecesIgual == 1) {
-					if(modo==1) {
-					
-						matriz1 = new double[2][1];
-						matriz1[0][0]=Double.parseDouble(Input00.getText());
-						matriz1[1][0]=Double.parseDouble(Input10.getText());
-						
-						Input00.setText("");
-						Input01.setText("");
-						Input10.setText("");
-						Input11.setText("");
-						
+			    	
+			    	if(modo==1) {
+			    		matriz1 = new Double[1][3];
 					}
 					else if(modo==2) {
-						matriz1 = new double[1][2];
-						matriz1[0][0]=Double.parseDouble(Input00.getText());
-						matriz1[0][1]=Double.parseDouble(Input01.getText());
-
-						Input00.setText("");
-						Input01.setText("");
-						Input10.setText("");
-						Input11.setText("");
+						matriz1 = new Double[2][3];
 						
-					} else {
-						matriz1 = new double[2][2];
-						matriz1[0][0]=Double.parseDouble(Input00.getText());
-						matriz1[1][0]=Double.parseDouble(Input10.getText());
-						matriz1[0][1]=Double.parseDouble(Input01.getText());
-						matriz1[1][1]=Double.parseDouble(Input11.getText());		
+					} else if(modo==3) {
+						matriz1 = new Double[3][1];
+						
+					} else if(modo==4) {
+						matriz1 = new Double[3][2];
+					}
+					else {
+						matriz1 = new Double[3][3];
 					}
 					
-					Input00.setText("");
-					Input01.setText("");
-					Input10.setText("");
-					Input11.setText("");
+					matrizAsignacion(matriz1);
 					
 					devuelta.doClick();
+
+					reset();
 					
 					AvisoMatriz.setText("Segunda Matriz");
 					
 					return;
 				}
 				if(cantVecesIgual == 2) {
-					
 					if(modo==1) {
-						matriz2 = new double[2][1];
-						matriz2[0][0]=Double.parseDouble(Input00.getText());
-						matriz2[1][0]=Double.parseDouble(Input10.getText());
+			    		matriz2 = new Double[1][3];
 					}
 					else if(modo==2) {
-						matriz2 = new double[1][2];
-						matriz2[0][0]=Double.parseDouble(Input00.getText());
-						matriz2[0][1]=Double.parseDouble(Input01.getText());
-					} else {
-						matriz2 = new double[2][2];
-						matriz2[0][0]=Double.parseDouble(Input00.getText());
-						matriz2[1][0]=Double.parseDouble(Input10.getText());
-						matriz2[0][1]=Double.parseDouble(Input01.getText());
-						matriz2[1][1]=Double.parseDouble(Input11.getText());	
+						matriz2 = new Double[2][3];
+						
+					} else if(modo==3) {
+						matriz2 = new Double[3][1];
+						
+					} else if(modo==4) {
+						matriz2 = new Double[3][2];
 					}
+					else {
+						matriz2 = new Double[3][3];
+					}
+					
+					matrizAsignacion(matriz2);
 					
 					devuelta.setVisible(false);
 					igual.setVisible(false);
@@ -1000,16 +941,17 @@ public class OperacionesConMatrices3x3 {
 					anterior.setVisible(false);
 					Ac.setVisible(false);
 					Del.setVisible(false);
-					punto.setVisible(false);
 					AvisoMatriz.setVisible(false);
 					Input00.setVisible(false);
 					Input01.setVisible(false);
+					Input02.setVisible(false);
 					Input10.setVisible(false);
 					Input11.setVisible(false);
-					TFmatriz1_1.setVisible(false);
-					TFmatriz1_2.setVisible(false);
-					TFmatriz2_1.setVisible(false);
-					TFmatriz2_2.setVisible(false);
+					Input12.setVisible(false);
+					Input20.setVisible(false);
+					Input21.setVisible(false);
+					Input22.setVisible(false);
+					
 					Suma.setVisible(true);
 					Resta.setVisible(true);
 					Multiplicar.setVisible(true);
@@ -1022,53 +964,62 @@ public class OperacionesConMatrices3x3 {
 					Inversa2.setVisible(true);
 					PanelResultado.setVisible(true);
 					Restablecer.setVisible(true);
+					
 					TFmatriz1_1.setVisible(true);
 					TFmatriz1_2.setVisible(true);
+					TFmatriz1_3.setVisible(true);
 					
-					for (int i = 0; i < matriz1.length; i++) {          // Iterar sobre las filas
-			            for (int j = 0; j < matriz1[i].length; j++) {   // Iterar sobre las columnas
-			            	if(i>0) {
-			            		TFmatriz1_2.setText(TFmatriz1_2.getText() + matriz1[i][j] + "   ");
-			            	}
-			            	else {
-			            		TFmatriz1_1.setText(TFmatriz1_1.getText() + matriz1[i][j] + "   ");
-			            	}
-			            }
-			        }
+					for (int i = 0; i < matriz1.length; i++) {          
+					    for (int j = 0; j < matriz1[i].length; j++) {   
+					        if (i == 0) {
+					            TFmatriz1_1.setText(TFmatriz1_1.getText() + matriz1[i][j] + "   ");
+					        } else if (i == 1) {
+					            TFmatriz1_2.setText(TFmatriz1_2.getText() + matriz1[i][j] + "   ");
+					        } else if (i==2){
+					            TFmatriz1_3.setText(TFmatriz1_3.getText() + matriz1[i][j] + "   ");
+					        }
+					    }
+					}
 					
 					
 					TFmatriz2_1.setVisible(true);
 					TFmatriz2_2.setVisible(true);
-					for (int i = 0; i < matriz2.length; i++) {          // Iterar sobre las filas
-			            for (int j = 0; j < matriz2[i].length; j++) {   // Iterar sobre las columnas
-			            	if(i>0) {
-			            		TFmatriz2_2.setText(TFmatriz2_2.getText() + matriz2[i][j] + "   ");
-			            	}
-			            	else {
-			            		TFmatriz2_1.setText(TFmatriz2_1.getText() + matriz2[i][j] + "   ");
-			            	}
-			            }
-			        }
+					TFmatriz2_3.setVisible(true);
+					
+					for (int i = 0; i < matriz2.length; i++) {          
+					    for (int j = 0; j < matriz2[i].length; j++) {   
+					        if (i == 0) {
+					            TFmatriz2_1.setText(TFmatriz2_1.getText() + matriz2[i][j] + "   ");
+					        } else if (i == 1) {
+					            TFmatriz2_2.setText(TFmatriz2_2.getText() + matriz2[i][j] + "   ");
+					        }else if(i==2) {
+					        	TFmatriz2_3.setText(TFmatriz2_3.getText() + matriz2[i][j] + "   ");
+					        }
+					    }
+					}
+
 					LMatriz1.setVisible(true);
 					LMatriz2.setVisible(true);
-					
-					
-					for (int i = 0; i < matriz1.length; i++) {          // Iterar sobre las filas
-			            for (int j = 0; j < matriz1[i].length; j++) {   // Iterar sobre las columnas
-			                System.out.print(matriz1[i][j] + " ");      // Imprimir cada elemento seguido de un espacio
+					/*
+					for (int i = 0; i < matriz1.length; i++) {          
+			            for (int j = 0; j < matriz1[i].length; j++) {   
+			                System.out.print(matriz1[i][j] + " ");      
 			            }
-			            System.out.println();                          // Nueva línea después de cada fila
+			            System.out.println();                          
 			        }
 					System.out.println("");
 					System.out.println("");
 					
-					for (int i = 0; i < matriz2.length; i++) {          // Iterar sobre las filas
-			            for (int j = 0; j < matriz2[i].length; j++) {   // Iterar sobre las columnas
-			                System.out.print(matriz2[i][j] + " ");      // Imprimir cada elemento seguido de un espacio
+					for (int i = 0; i < matriz2.length; i++) {          
+			            for (int j = 0; j < matriz2[i].length; j++) {   
+			                System.out.print(matriz2[i][j] + " ");      
 			            }
-			            System.out.println();                          // Nueva línea después de cada fila
+			            System.out.println();                          
 			        }
 					
+					System.out.println(matriz2.length + " x= "+matriz2[0].length); 
+					System.out.println(matriz1.length + " x= "+matriz1[0].length); 
+					*/
 					return;
 					
 					
@@ -1090,6 +1041,146 @@ public class OperacionesConMatrices3x3 {
 		Est.labelEstandar(AvisoEscalar);
 		AvisoEscalar.setVisible(false);
 		frame.getContentPane().add(AvisoEscalar);
+		Input00.setBounds(30, 99, 83, 29);
+		frame.getContentPane().add(Input00);
+		Input00.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				devuelta.doClick();
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				Input00.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			}
+		});
+		Input00.setFocusTraversalKeysEnabled(false);
+		Input00.setHorizontalAlignment(SwingConstants.CENTER);
+		Input00.addHover();
+		Input00.setBackground(new Color(150,150,150));
+		Input01.setBounds(141, 99, 83, 29);
+		frame.getContentPane().add(Input01);
+		Input01.setHorizontalAlignment(SwingConstants.CENTER);
+		Input02.setBounds(250, 99, 83, 29);
+		frame.getContentPane().add(Input02);
+		Input02.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				modo=1;
+				Input10.setVisible(false);
+				Input10.setText("");
+				
+				Input11.setVisible(false);
+				Input11.setText("");
+				
+				Input12.setVisible(false);
+				Input12.setText("");
+				
+				Input20.setVisible(false);
+				Input20.setText("");
+				
+				Input21.setVisible(false);
+				Input21.setText("");
+				
+				Input22.setVisible(false);
+				Input22.setText("");
+				
+				devuelta.setVisible(true);
+			}
+		});
+		Input02.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		
+
+		Input02.setHorizontalAlignment(SwingConstants.CENTER);
+		Input12.setBounds(250, 141, 83, 29);
+		frame.getContentPane().add(Input12);
+		
+		Input12.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				modo=2;
+				Input20.setVisible(false);
+				Input20.setText("");
+				
+				Input21.setVisible(false);
+				Input21.setText("");
+				
+				Input22.setVisible(false);
+				Input22.setText("");
+				
+				devuelta.setVisible(true);
+			}
+		});
+		Input12.setHorizontalAlignment(SwingConstants.CENTER);
+		Input12.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		Input11.setBounds(141, 141, 83, 29);
+		frame.getContentPane().add(Input11);
+		
+		Input11.setHorizontalAlignment(SwingConstants.CENTER);
+		Input10.setBounds(30, 141, 83, 29);
+		frame.getContentPane().add(Input10);
+		
+		Input10.setHorizontalAlignment(SwingConstants.CENTER);
+		Input10.setFocusTraversalKeysEnabled(false);
+		Input10.setBackground(Color.GRAY);
+		Input22.setBounds(250, 183, 83, 29);
+		frame.getContentPane().add(Input22);
+		
+		Input22.setHorizontalAlignment(SwingConstants.CENTER);
+		Input21.setBounds(141, 183, 83, 29);
+		frame.getContentPane().add(Input21);
+		Input21.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				modo=4;
+				Input02.setVisible(false);
+				Input02.setText("");
+				
+				Input12.setVisible(false);
+				Input12.setText("");
+				
+				Input22.setVisible(false);
+				Input22.setText("");
+				
+				devuelta.setVisible(true);
+			}
+		});
+		Input21.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		Input21.setHorizontalAlignment(SwingConstants.CENTER);
+		Input20.setBounds(30, 183, 83, 29);
+		frame.getContentPane().add(Input20);
+		
+		
+		
+		Input20.setHorizontalAlignment(SwingConstants.CENTER);
+		Input20.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				modo=3;
+				Input01.setVisible(false);
+				Input01.setText("");
+				
+				Input02.setVisible(false);
+				Input02.setText("");
+				
+				Input11.setVisible(false);
+				Input11.setText("");
+				
+				Input12.setVisible(false);
+				Input12.setText("");
+				
+				Input21.setVisible(false);
+				Input21.setText("");
+				
+				Input22.setVisible(false);
+				Input22.setText("");
+				
+				devuelta.setVisible(true);
+			}
+		});
+		Input20.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		Input20.setFocusTraversalKeysEnabled(false);
+		Input20.setBackground(Color.GRAY);
+		Input01.addHover();
 		
 		
 		
@@ -1102,38 +1193,51 @@ public class OperacionesConMatrices3x3 {
 	}
 	
 	public void focusMasUno() {
-		if(modo==1||modo==2) {
-			if(count>=0&&count<2) {
+		if(modo==1||modo==3) {
+			if(count>=0&&count<3) {
 				count++;
 			}
-			if(count==2) {
+			if(count==3) {
 				count=0;
 			}
 			return;
 		}
-		if(count>=0&&count<3) {
-			count++;
+		if(modo==2||modo==4){
+			if(count<6) {
+				count++;
+			}
+			if(count==6) {
+				count=0;
+			}
 			return;
 		}
-		if(count>2) {
-			count=0;
+		if(count>=0&&count<9) {
+			count++;
+			return;
 		}
 	}
 	
 	public void focusMenosUno() {
-		if(modo==1||modo==2) {
-			if(count>0&&count<=2) {
+		if(modo==1||modo==3) {
+			if(count>=1&&count<=2) {
 				count--;
 			}
 			return;
 		}
-		if(count>=1&&count<=3) {
+		if(modo==2||modo==4){
+			if(count<=6) {
+				count--;
+			}
+			return;
+		}
+		if(count>=1&&count<=9) {
 			count--;
+			return;
 		}
 	}
 	
 	private JComponentOvalTF usarTextField() {
-		if(modo==6) {
+		if(modo==11) {
 			return InputPE;
 		}
 		if(modo==1) {
@@ -1143,7 +1247,9 @@ public class OperacionesConMatrices3x3 {
 			if(count==1) {
 				return Input01;
 			}
-			return Input00;
+			if(count==2) {
+				return Input02;
+			}
 		}
 		if(modo==2) {
 
@@ -1151,9 +1257,52 @@ public class OperacionesConMatrices3x3 {
 				return Input00;
 			}
 			if(count==1) {
+				return Input01;
+			}
+			if(count==2) {
+				return Input02;
+			}
+			if(count==3) {
 				return Input10;
 			}
-			return Input00;
+			if(count==4) {
+				return Input11;
+			}
+			if(count==5) {
+				return Input12;
+			}
+		}
+		if(modo==3) {
+			if(count==0) {
+				return Input00;
+			}
+			if(count==1) {
+				return Input10;
+			}
+			if(count==2) {
+				return Input20;
+			}
+		}
+		if(modo==4) {
+
+			if(count==0) {
+				return Input00;
+			}
+			if(count==1) {
+				return Input01;
+			}
+			if(count==2) {
+				return Input10;
+			}
+			if(count==3) {
+				return Input11;
+			}
+			if(count==4) {
+				return Input20;
+			}
+			if(count==5) {
+				return Input21;
+			}
 		}
 		
 		if(count==0) {
@@ -1163,11 +1312,30 @@ public class OperacionesConMatrices3x3 {
 			return Input01;
 		}
 		if(count==2) {
-			return Input10;
+			return Input02;
 		}
 		if(count==3) {
+			return Input10;
+		}
+		if(count==4) {
 			return Input11;
 		}
+		if(count==5) {
+			return Input12;
+		}
+		if(count==6) {
+			return Input20;
+		}
+		if(count==7) {
+			return Input21;
+		}
+		if(count==8) {
+			return Input22;
+		}
+		if(count>8) {
+			count=0;
+		}
+		
 		return Input00;
 	}
 	
@@ -1179,13 +1347,42 @@ public class OperacionesConMatrices3x3 {
 			Ac.setBackground(new Color(180,0,0));
 			Ac.addHover(new Color(230,0,0));
 		} else if(AcCount>1) {
-			Input00.setText("");
-			Input01.setText("");
-			Input10.setText("");
-			Input11.setText("");
+			reset();
 			Est.CompOvalColorEstandar(Ac);
 		}
 	}
+	
+	public void reset() {
+		Input00.setText("");
+		Input00.setBackground(new Color(150,150,150));
+		Input01.setText("");
+		Input01.setBackground(Color.GRAY);
+		Input02.setText("");
+		Input02.setBackground(Color.GRAY);
+		
+		Input10.setText("");
+		Input10.setBackground(Color.GRAY);
+		Input11.setText("");
+		Input11.setBackground(Color.GRAY);
+		Input12.setText("");
+		Input12.setBackground(Color.GRAY);
+		
+		Input20.setText("");
+		Input20.setBackground(Color.GRAY);
+		Input21.setText("");
+		Input21.setBackground(Color.GRAY);
+		Input22.setText("");
+		Input22.setBackground(Color.GRAY);
+		
+		count=0;
+		modo=0;
+	}
+	
+	public void vaciarResultados() {
+    	Resultado.setText("");
+    	Resultado2.setText("");
+    	Resultado3.setText("");
+    }
 	
 	public void resetAc() {
 		if(AcCount==1||AcCount>1) {
@@ -1194,165 +1391,208 @@ public class OperacionesConMatrices3x3 {
 		}
 	}
 	
-	public double[][] sumaMatrices(double[][] a, double[][] b) {
-	    if(a.length!=b.length) {
-	    	Resultado.setText("Error: columnas y ");
-	    	Resultado2.setText(" filas desiguales. ");
-	    	return null;
-	    }
-		int rows = a.length;
-	    int cols = a[0].length;
-	    double[][] result = new double[rows][cols];
-	    for (int i = 0; i < rows; i++) {
-	        for (int j = 0; j < cols; j++) {
-	            result[i][j] = a[i][j] + b[i][j];
-	        }
-	    }
-	    return result;
-	}
-	
-	public double[][] restaMatrices(double[][] a, double[][] b) {
-		if(a.length!=b.length) {
-	    	Resultado.setText("Error: columnas y ");
-	    	Resultado2.setText(" filas desiguales. ");
-	    	return null;
-	    }
-		int rows = a.length;
-	    int cols = a[0].length;
-	    double[][] result = new double[rows][cols];
-	    for (int i = 0; i < rows; i++) {
-	        for (int j = 0; j < cols; j++) {
-	            result[i][j] = a[i][j] - b[i][j];
-	        }
-	    }
-	    return result;
-	}
-	
-	public static double[][] multicplicacionPorEscalarMatriz(double[][] matrix, double scalar) {
-	    int rows = matrix.length;
-	    int cols = matrix[0].length;
-	    double[][] result = new double[rows][cols];
-	    for (int i = 0; i < rows; i++) {
-	        for (int j = 0; j < cols; j++) {
-	            result[i][j] = matrix[i][j] * scalar;
-	        }
-	    }
-	    return result;
-	}
-	
-    public double[][] multiplicacionDeMatrices(double[][] a, double[][] b) {
-        int rowsA = a.length;
-        int colsA = a[0].length;
-        int rowsB = b.length;
-        int colsB = b[0].length;
+    
+    public void mostrarResultados(Double[][] matriz) {
+    	vaciarResultados();
+    	for (int i = 0; i < matriz.length; i++) {         
+            for (int j = 0; j < matriz[i].length; j++) { 
+            	if(i==0) {
+            		Resultado.setText(Resultado.getText() + roundToDecimals(matriz[i][j]) + "  ");
+            	}
+            	else if(i==1) {
+            		Resultado2.setText(Resultado2.getText() + roundToDecimals(matriz[i][j]) + "  ");
+            	}
+            	else if(i==2){
+            		Resultado3.setText(Resultado3.getText() + roundToDecimals(matriz[i][j]) + "  ");
+            	}
+            }
+        }
+    }
+    public void mostrarResultados(Double resultado) {
+    	Resultado.setText(String.valueOf(resultado));    		
+    }
+    
+    public static Double roundToDecimals(Double value) {
+    	int decimals = 2;
+        Double scale = Math.pow(10, decimals);
+        return Math.round(value * scale) / scale;
+    }
+    
+    public void matrizAsignacion(Double[][] mat) {
+    	if(modo==1) {
+    		mat[0][0]=Double.parseDouble(Input00.getText());
+    		mat[0][1]=Double.parseDouble(Input01.getText());
+    		mat[0][2]=Double.parseDouble(Input02.getText());
 
-        if (colsA != rowsB) {
-	        Resultado.setText("La matriz no se ");
-	        Resultado2.setText("puede multiplicar");
+		}
+		else if(modo==2) {
+			mat[0][0]=Double.parseDouble(Input00.getText());
+			mat[0][1]=Double.parseDouble(Input01.getText());
+			mat[0][2]=Double.parseDouble(Input02.getText());
+			mat[1][0]=Double.parseDouble(Input10.getText());
+			mat[1][1]=Double.parseDouble(Input11.getText());
+			mat[1][2]=Double.parseDouble(Input12.getText());
+		} else if(modo==3) {
+			mat[0][0]=Double.parseDouble(Input00.getText());
+			mat[1][0]=Double.parseDouble(Input10.getText());
+			mat[2][0]=Double.parseDouble(Input20.getText());
+			
+		} else if(modo==4) {
+			mat[0][0]=Double.parseDouble(Input00.getText());
+			mat[0][1]=Double.parseDouble(Input01.getText());
+			mat[1][0]=Double.parseDouble(Input10.getText());
+			mat[1][1]=Double.parseDouble(Input11.getText());
+			mat[2][0]=Double.parseDouble(Input20.getText());
+			mat[2][1]=Double.parseDouble(Input21.getText());
+		}
+		else {
+			mat[0][0]=Double.parseDouble(Input00.getText());
+			mat[0][1]=Double.parseDouble(Input01.getText());
+			mat[0][2]=Double.parseDouble(Input02.getText());
+			mat[1][0]=Double.parseDouble(Input10.getText());	
+			mat[1][1]=Double.parseDouble(Input11.getText());
+			mat[1][2]=Double.parseDouble(Input12.getText());	
+			mat[2][0]=Double.parseDouble(Input20.getText());
+			mat[2][1]=Double.parseDouble(Input21.getText());		
+			mat[2][2]=Double.parseDouble(Input22.getText());
+		}
+    }
+    
+    
+    private Double[][] sumaMatrices(Double[][] matrizA, Double[][] matrizB) {
+    	if (matrizA.length != 3 || matrizB[0].length != 3) {
+        	Resultado.setText("Ambas matrices");
+            Resultado2.setText("deben ser de 3x3");
+        	return null;
+        }
+    	Double[][] resultado = new Double[3][3];
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                resultado[i][j] = matrizA[i][j] + matrizB[i][j];
+            }
+        }
+        return resultado;
+    }
+
+    private Double[][] restaMatrices(Double[][] matrizA, Double[][] matrizB) {
+    	if (matrizA.length != 3 || matrizB[0].length != 3) {
+        	Resultado.setText("Ambas matrices");
+            Resultado2.setText("deben ser de 3x3");
+        	return null;
+        }
+    	Double[][] resultado = new Double[3][3];
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                resultado[i][j] = matrizA[i][j] - matrizB[i][j];
+            }
+        }
+        return resultado;
+    }
+    
+    public Double[][] multiplicacionEscalarMatriz(Double[][] matriz, Double escalar) {
+        int filas = matriz.length;
+        int columnas = matriz[0].length;
+        Double[][] resultado = new Double[filas][columnas];
+
+        for (int i = 0; i < filas; i++) {
+            for (int j = 0; j < columnas; j++) {
+                resultado[i][j] = escalar * matriz[i][j];
+            }
+        }
+        return resultado;
+    }
+    
+    private Double[][] multiplicacionMatrices(Double[][] matrizA, Double[][] matrizB) {
+        int filasA = matrizA.length;
+        int columnasA = matrizA[0].length;
+        int filasB = matrizB.length;
+        int columnasB = matrizB[0].length;
+
+        if (columnasA != filasB) {
+        	Resultado.setText("El numero de columnas");
+            Resultado2.setText("de a deben ser iguales A ");
+            Resultado3.setText("las cantidad de filas de B");
             return null;
         }
 
-        double[][] result = new double[rowsA][colsB];
-
-        for (int i = 0; i < rowsA; i++) {
-            for (int j = 0; j < colsB; j++) {
-                for (int k = 0; k < colsA; k++) {
-                    result[i][j] += a[i][k] * b[k][j];
+        Double[][] resultado = new Double[filasA][columnasB];
+        for (int i = 0; i < filasA; i++) {
+            for (int j = 0; j < columnasB; j++) {
+                resultado[i][j] = (double) 0;
+                for (int k = 0; k < columnasA; k++) {
+                    resultado[i][j] += matrizA[i][k] * matrizB[k][j];
                 }
             }
         }
-
-        return result;
+        return resultado;
     }
-	
-	public double[][] inversa2x2(double[][] matrix) {
-	    if (matrix.length != 2 || matrix[0].length != 2) {
-	    	Resultado.setText("Error: columnas y ");
-	    	Resultado2.setText(" filas desiguales. ");
-	    }
-
-	    double det = determinant2x2(matrix);
-	    if (det == 0) {
-	        Resultado.setText("La matriz no ");
-	        Resultado2.setText("tiene inversa");
-	    }
-
-	    double[][] result = new double[2][2];
-	    result[0][0] = matrix[1][1] / det;
-	    result[0][1] = -matrix[0][1] / det;
-	    result[1][0] = -matrix[1][0] / det;
-	    result[1][1] = matrix[0][0] / det;
-
-	    return result;
-	}
-	
-	public Double determinant2x2(double[][] matrix) {
-	    if (matrix.length != 2 || matrix[0].length != 2) {
-	    	Resultado.setText("La matriz debe ");
-            Resultado2.setText("ser de 2x2");
-            return null;
-	    }
-	    return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
-	}
-	
-    public double[][] dividirMatrices(double[][] A, double[][] B) {
-    	if (B.length != 2 || B[0].length != 2) {
-    		Resultado.setText("La matriz debe ");
-            Resultado2.setText("ser de 2x2");
-            return null;
+    
+    private Double[][] divisionMatrices(Double[][] matrizA, Double[][] matrizB) {
+    	if (matrizA.length != 3 || matrizB[0].length != 3) {
+        	Resultado.setText("Ambas matrices");
+            Resultado2.setText("deben ser de 3x3");
+        	return null;
         }
-        double[][] B_inv = inverse2x2(B);
-        if(B_inv==null) {
+    	Double[][] inversaB = inversaMatriz(matrizB);
+        if(inversaB==null) {
         	Resultado.setText("La matriz no ");
             Resultado2.setText("tiene division");
             return null;
         }
-        return multiplicacionDeMatrices(A, B_inv);
+        return multiplicacionMatrices(matrizA, inversaB);
     }
-
-    public double[][] inverse2x2(double[][] matrix) {
-        if (matrix.length != 2 || matrix[0].length != 2) {
-        	Resultado.setText("La matriz debe ");
-            Resultado2.setText("ser de 2x2");
+    
+    private static Double determinanteMatriz(Double[][] matriz) {
+    	if(matriz.length != 3 || matriz[0].length != 3) {
+    		return null;
+    	}
+    	Double determinante = matriz[0][0] * (matriz[1][1] * matriz[2][2] - matriz[1][2] * matriz[2][1]) -
+                           matriz[0][1] * (matriz[1][0] * matriz[2][2] - matriz[1][2] * matriz[2][0]) +
+                           matriz[0][2] * (matriz[1][0] * matriz[2][1] - matriz[1][1] * matriz[2][0]);
+        return determinante;
+    }
+    
+    private Double[][] inversaMatriz(Double[][] matriz) {
+        Double determinante = determinanteMatriz(matriz);
+        if (matriz.length != 3 || matriz[0].length != 3) {
+        	Resultado.setText("La matriz");
+            Resultado2.setText("debe ser de 3x3");
         	return null;
         }
-        double det = matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
-        if (det == 0) {
-        	Resultado.setText("No se puede hacer");
-        	Resultado2.setText("Porque det es 0");
+        if (determinante == 0) {
+            Resultado.setText("No se puede");
+            Resultado2.setText("hacer porque");
+            Resultado3.setText("el det es 0");
             return null;
         }
-        double[][] inverse = {
-            { matrix[1][1] / det, -matrix[0][1] / det },
-            { -matrix[1][0] / det, matrix[0][0] / det }
-        };
-        return inverse;
-    }
-    
-    public void vaciarResultados() {
-    	Resultado.setText("");
-    	Resultado2.setText("");
-    }
-    public void mostrarResultados(double[][] matriz) {
-    	vaciarResultados();
-    	for (int i = 0; i < matriz.length; i++) {         
-            for (int j = 0; j < matriz[i].length; j++) { 
-            	if(i>0) {
-            		Resultado2.setText(Resultado2.getText() + roundToDecimals(matriz[i][j]) + "  ");
-            	}
-            	else {
-            		Resultado.setText(Resultado.getText() + roundToDecimals(matriz[i][j]) + "  ");
-            	}
+
+        Double[][] adjunta = matrizAdjunta(matriz);
+
+        Double[][] inversa = new Double[3][3];
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                inversa[i][j] = adjunta[i][j] / determinante;
             }
         }
+        return inversa;
     }
-    public void mostrarResultados(double resultado) {
-    	Resultado.setText(String.valueOf(resultado));    		
+
+    private Double[][] matrizAdjunta(Double[][] matriz) {
+    	Double[][] adjunta = new Double[3][3];
+
+        adjunta[0][0] = matriz[1][1] * matriz[2][2] - matriz[1][2] * matriz[2][1];
+        adjunta[0][1] = -(matriz[1][0] * matriz[2][2] - matriz[1][2] * matriz[2][0]);
+        adjunta[0][2] = matriz[1][0] * matriz[2][1] - matriz[1][1] * matriz[2][0];
+
+        adjunta[1][0] = -(matriz[0][1] * matriz[2][2] - matriz[0][2] * matriz[2][1]);
+        adjunta[1][1] = matriz[0][0] * matriz[2][2] - matriz[0][2] * matriz[2][0];
+        adjunta[1][2] = -(matriz[0][0] * matriz[2][1] - matriz[0][1] * matriz[2][0]);
+
+        adjunta[2][0] = matriz[0][1] * matriz[1][2] - matriz[0][2] * matriz[1][1];
+        adjunta[2][1] = -(matriz[0][0] * matriz[1][2] - matriz[0][2] * matriz[1][0]);
+        adjunta[2][2] = matriz[0][0] * matriz[1][1] - matriz[0][1] * matriz[1][0];
+
+        return adjunta;
     }
     
-    public static double roundToDecimals(double value) {
-    	int decimals = 2;
-        double scale = Math.pow(10, decimals);
-        return Math.round(value * scale) / scale;
-    }
 }
