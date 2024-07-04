@@ -300,7 +300,7 @@ public class OperacionesConVectores {
 		
 		JComponentOval restar = new JComponentOval(10);
 		restar.setBounds(187, 202, 151, 46);
-		restar.setText("restar");
+		restar.setText("Restar");
 		restar.setVisible(false);
 		restar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -312,7 +312,7 @@ public class OperacionesConVectores {
 		
 		JComponentOval multiplicacionEscalar = new JComponentOval(10);
 		multiplicacionEscalar.setBounds(28, 315, 149, 46);
-		multiplicacionEscalar.setText("multiplicacionEscalar");
+		multiplicacionEscalar.setText("MultiplicacionEscalar");
 		multiplicacionEscalar.setVisible(false);
 		multiplicacionEscalar.setFont(new Font("Calibri", Font.BOLD, 15));
 		frame.getContentPane().add(multiplicacionEscalar);
@@ -462,6 +462,10 @@ public class OperacionesConVectores {
 					        double roundedValue = bd.doubleValue();
 							vec1.add(roundedValue);
 						}
+
+						
+						avisos.setText("Ahora ingresara el segundo vector: ");
+						avisos.setVisible(true);
 					}
 					
 				} else if(count>1) {

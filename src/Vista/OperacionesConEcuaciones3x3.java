@@ -37,6 +37,8 @@ public class OperacionesConEcuaciones3x3 {
 	private JComponentOvalTF InputB3 = new JComponentOvalTF(5);
 	private JComponentOvalTF InputC3 = new JComponentOvalTF(5);
 	private JComponentOvalTF InputTI3 = new JComponentOvalTF(5);
+	private int countPunto = 0;
+	private int countMenos = 0;
 	private int count = 0;
 	private int AcCount = 0;
 	private JTextField CalculoResolver;
@@ -186,7 +188,7 @@ public class OperacionesConEcuaciones3x3 {
 		frame.getContentPane().add(lblB_6);
 		
 		JComponentOval Uno = new JComponentOval(10);
-		Uno.setBounds(46, 199, 39, 29);
+		Uno.setBounds(31, 199, 39, 29);
 		Uno.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Uno.setFont(new Font("Calibri", Font.BOLD, 17));
 		Uno.setContentAreaFilled(false);
@@ -202,7 +204,7 @@ public class OperacionesConEcuaciones3x3 {
 		frame.getContentPane().add(Uno);
 		
 		JComponentOval Dos = new JComponentOval(10);
-		Dos.setBounds(95, 199, 39, 29);
+		Dos.setBounds(80, 199, 39, 29);
 		Dos.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Dos.setFont(new Font("Calibri", Font.BOLD, 17));
 		Dos.setContentAreaFilled(false);
@@ -218,7 +220,7 @@ public class OperacionesConEcuaciones3x3 {
 		frame.getContentPane().add(Dos);
 		
 		JComponentOval Tres = new JComponentOval(10);
-		Tres.setBounds(144, 199, 39, 29);
+		Tres.setBounds(129, 199, 39, 29);
 		Tres.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Tres.setFont(new Font("Calibri", Font.BOLD, 17));
 		Tres.setContentAreaFilled(false);
@@ -234,7 +236,7 @@ public class OperacionesConEcuaciones3x3 {
 		frame.getContentPane().add(Tres);
 		
 		JComponentOval Cuatro = new JComponentOval(10);
-		Cuatro.setBounds(46, 239, 39, 29);
+		Cuatro.setBounds(31, 239, 39, 29);
 		Cuatro.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Cuatro.setFont(new Font("Calibri", Font.BOLD, 17));
 		Cuatro.setContentAreaFilled(false);
@@ -251,7 +253,7 @@ public class OperacionesConEcuaciones3x3 {
 		
 		
 		JComponentOval Cinco = new JComponentOval(10);
-		Cinco.setBounds(95, 239, 39, 29);
+		Cinco.setBounds(80, 239, 39, 29);
 		Cinco.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Cinco.setFont(new Font("Calibri", Font.BOLD, 17));
 		Cinco.setContentAreaFilled(false);
@@ -268,7 +270,7 @@ public class OperacionesConEcuaciones3x3 {
 		
 		
 		JComponentOval Seis = new JComponentOval(10);
-		Seis.setBounds(144, 239, 39, 29);
+		Seis.setBounds(129, 239, 39, 29);
 		Seis.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Seis.setFont(new Font("Calibri", Font.BOLD, 17));
 		Seis.setContentAreaFilled(false);
@@ -284,7 +286,7 @@ public class OperacionesConEcuaciones3x3 {
 		frame.getContentPane().add(Seis);
 		
 		JComponentOval Sieste = new JComponentOval(10);
-		Sieste.setBounds(46, 279, 39, 29);
+		Sieste.setBounds(31, 279, 39, 29);
 		Sieste.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Sieste.setFont(new Font("Calibri", Font.BOLD, 17));
 		Sieste.setContentAreaFilled(false);
@@ -300,7 +302,7 @@ public class OperacionesConEcuaciones3x3 {
 		frame.getContentPane().add(Sieste);
 		
 		JComponentOval Ocho = new JComponentOval(10);
-		Ocho.setBounds(95, 279, 39, 29);
+		Ocho.setBounds(80, 279, 39, 29);
 		Ocho.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Ocho.setFont(new Font("Calibri", Font.BOLD, 17));
 		Ocho.setContentAreaFilled(false);
@@ -316,7 +318,7 @@ public class OperacionesConEcuaciones3x3 {
 		frame.getContentPane().add(Ocho);
 		
 		JComponentOval Nueve = new JComponentOval(10);
-		Nueve.setBounds(144, 279, 39, 29);
+		Nueve.setBounds(129, 279, 39, 29);
 		Nueve.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Nueve.setFont(new Font("Calibri", Font.BOLD, 17));
 		Nueve.setContentAreaFilled(false);
@@ -332,7 +334,7 @@ public class OperacionesConEcuaciones3x3 {
 		frame.getContentPane().add(Nueve);
 		
 		JComponentOval Cero = new JComponentOval(10);
-		Cero.setBounds(193, 279, 58, 29);
+		Cero.setBounds(178, 279, 39, 29);
 		Cero.setBackground(Color.GRAY);
 		Cero.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Cero.setFont(new Font("Calibri", Font.BOLD, 17));
@@ -350,7 +352,7 @@ public class OperacionesConEcuaciones3x3 {
 	
 		
 		
-		Ac.setBounds(261, 199, 59, 29);
+		Ac.setBounds(282, 199, 46, 29);
 		Est.CompOvalColorEstandar(Ac);
 		Ac.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Ac.setFont(new Font("Calibri", Font.BOLD, 17));
@@ -366,7 +368,7 @@ public class OperacionesConEcuaciones3x3 {
 		frame.getContentPane().add(Ac);
 		
 		JComponentOval Del = new JComponentOval(10);
-		Del.setBounds(193, 199, 58, 29);
+		Del.setBounds(227, 199, 46, 29);
 		Est.CompOvalColorEstandar(Del);
 		Del.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Del.setFont(new Font("Calibri", Font.BOLD, 17));
@@ -399,7 +401,7 @@ public class OperacionesConEcuaciones3x3 {
 		frame.getContentPane().add(lblB_5_1);
 		
 		JComponentOval siguiente = new JComponentOval(10);
-		siguiente.setBounds(262, 239, 58, 29);
+		siguiente.setBounds(283, 239, 46, 29);
 		siguiente.setBackground(Color.GRAY);
 		siguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -409,6 +411,8 @@ public class OperacionesConEcuaciones3x3 {
 				usarTextField().setBackground((Color.GRAY));
 				focusMasUno();
 				usarTextField().setBackground(new Color(150,150,150));
+				countPunto=0;
+				countMenos=0;
 			}
 		});
 		siguiente.addHover();
@@ -416,7 +420,7 @@ public class OperacionesConEcuaciones3x3 {
 		frame.getContentPane().add(siguiente);
 		
 		JComponentOval anterior = new JComponentOval(10);
-		anterior.setBounds(193, 239, 58, 29);
+		anterior.setBounds(227, 239, 46, 29);
 		anterior.setBackground(Color.GRAY);
 		anterior.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -426,13 +430,49 @@ public class OperacionesConEcuaciones3x3 {
 				usarTextField().setBackground((Color.GRAY));
 				focusMenosUno();
 				usarTextField().setBackground(new Color(150,150,150));
+				countPunto=0;
+				countMenos=0;
 			}
 		});
 		anterior.addHover();
 		anterior.setText("←");
 		frame.getContentPane().add(anterior);
 		
-
+		JComponentOval punto = new JComponentOval(10);
+		punto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(countPunto>0) {
+					return;
+				}
+				textField = usarTextField();
+				textField.setText(textField.getText() + ".");
+				countPunto++;
+			}
+		});
+		punto.setText(".");
+		punto.setFont(new Font("Calibri", Font.BOLD, 17));
+		punto.setContentAreaFilled(false);
+		punto.setBounds(178, 199, 39, 29);
+		frame.getContentPane().add(punto);
+		
+		JComponentOval menos = new JComponentOval(10);
+		menos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textField = usarTextField();
+				if(countMenos>0) {
+					return;
+				}
+				if(textField.getText().length()!=0) {
+					return;
+				}
+				textField.setText(textField.getText() + "-");
+				countMenos++;
+			}
+		});
+		menos.setText("-");
+		menos.setBackground(Color.GRAY);
+		menos.setBounds(178, 239, 39, 29);
+		frame.getContentPane().add(menos);
 		
 		JComponentOvalP componentOvalP = new JComponentOvalP(10);
 		componentOvalP.setBounds(20, 328, 328, 47);
@@ -516,7 +556,7 @@ public class OperacionesConEcuaciones3x3 {
 		Atras.addHover(new Color(194,85,236));
 
 		JComponentOval igual = new JComponentOval(10);
-		igual.setBounds(263, 279, 58, 29);
+		igual.setBounds(227, 279, 114, 29);
 		Est.CompOvalColorEstandar(igual);
 		igual.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
