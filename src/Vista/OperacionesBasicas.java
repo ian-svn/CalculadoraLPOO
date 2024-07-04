@@ -20,12 +20,30 @@ import java.awt.event.ActionEvent;
 import java.awt.Font;
 import java.awt.Panel;
 import javax.swing.SwingConstants;
+import javax.swing.JToggleButton;
+import javax.swing.JList;
 
 public class OperacionesBasicas {
 
 	private JFrame frame;
 	private Estandar Est = new Estandar();
+	private int countPunto=0;
 
+	private JComponentOval Punto = new JComponentOval(10);
+	private JComponentOval Del = new JComponentOval(10);
+	private JComponentOval Por = new JComponentOval(10);
+	private JComponentOval Ac = new JComponentOval(10);
+	private JComponentOval Mas = new JComponentOval(10);
+	private JComponentOval Resta = new JComponentOval(10);
+	private JComponentOval Dividir = new JComponentOval(10);
+	private JComponentOval Igual = new JComponentOval(10);
+	private JTextField Calculo = new JTextField();
+	private JComponentOval Atras = new JComponentOval(10);
+	private JComponentOval Raiz = new JComponentOval(10);
+	private JComponentOval Potencia = new JComponentOval(10);
+	private List<String> registros = new ArrayList<>();
+	private JComponentOval Registro = new JComponentOval(10);
+	private int count=0;
 	/**
 	 * Launch the application.
 	 */
@@ -61,19 +79,20 @@ public class OperacionesBasicas {
 	
 	private void initialize() {
 		frame = new JFrame();
+		frame.getContentPane().setBackground(Color.DARK_GRAY);
 		Est.frameEstandar(frame);
 
-		JTextField Calculo = new JTextField();
 		Calculo.setBorder(null);
 		Calculo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				return;
 			}
 		});
+		frame.getContentPane().setLayout(null);
 		Calculo.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		Calculo.setBackground(Color.GRAY);
 		Calculo.setFont(new Font("Calibri", Font.BOLD, 20));
-		Calculo.setBounds(64, 73, 241, 50);
+		Calculo.setBounds(52, 73, 270, 50);
 		Calculo.setForeground(Color.white);
 		Calculo.setFocusable(false);
 		
@@ -85,156 +104,176 @@ public class OperacionesBasicas {
 		PanelCalculo.setFont(new Font("Calibri", Font.BOLD, 20));
 		PanelCalculo.setContentAreaFilled(false);
 		PanelCalculo.setText("");
-		PanelCalculo.setBounds(49, 62, 272, 72);
+		PanelCalculo.setBounds(39, 62, 294, 72);
 		Est.panelEstandar(PanelCalculo);
 		frame.getContentPane().add(PanelCalculo);
 		
 		
 		JComponentOval Uno = new JComponentOval(10);
+		Uno.setBackground(Color.GRAY);
 		Uno.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Uno.setFont(new Font("Calibri", Font.BOLD, 17));
 		Uno.setContentAreaFilled(false);
 		Uno.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Calculo.setText(Calculo.getText() + "1");
+				borrarError();
 			}
 		});
 		Uno.setText("1");
-		Uno.setBounds(49, 162, 47, 40);
+		Uno.setBounds(58, 176, 43, 36);
 		Uno.addHover();
 		frame.getContentPane().add(Uno);
 		
 		JComponentOval Dos = new JComponentOval(10);
+		Dos.setBackground(Color.GRAY);
 		Dos.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Dos.setFont(new Font("Calibri", Font.BOLD, 17));
 		Dos.setContentAreaFilled(false);
 		Dos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Calculo.setText(Calculo.getText() + "2");
+				borrarError();
 			}
 		});		
 		Dos.setText("2");
-		Dos.setBounds(106, 162, 47, 40);
+		Dos.setBounds(111, 176, 43, 36);
 		Dos.addHover();
 		frame.getContentPane().add(Dos);
 		
 		JComponentOval Tres = new JComponentOval(10);
+		Tres.setBackground(Color.GRAY);
 		Tres.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Tres.setFont(new Font("Calibri", Font.BOLD, 17));
 		Tres.setContentAreaFilled(false);
 		Tres.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Calculo.setText(Calculo.getText() + "3");
+				borrarError();
 			}
 		});		
 		Tres.setText("3");
-		Tres.setBounds(162, 162, 47, 40);
+		Tres.setBounds(164, 176, 43, 36);
 		Tres.addHover();
 		frame.getContentPane().add(Tres);
 		
 		JComponentOval Cuatro = new JComponentOval(10);
+		Cuatro.setBackground(Color.GRAY);
 		Cuatro.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Cuatro.setFont(new Font("Calibri", Font.BOLD, 17));
 		Cuatro.setContentAreaFilled(false);
 		Cuatro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Calculo.setText(Calculo.getText() + "4");
+				borrarError();
 			}
 		});		
 		Cuatro.setText("4");
-		Cuatro.setBounds(49, 211, 47, 40);
+		Cuatro.setBounds(58, 223, 43, 36);
 		Cuatro.addHover();
 		frame.getContentPane().add(Cuatro);	
 		
 		
 		JComponentOval Cinco = new JComponentOval(10);
+		Cinco.setBackground(Color.GRAY);
 		Cinco.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Cinco.setFont(new Font("Calibri", Font.BOLD, 17));
 		Cinco.setContentAreaFilled(false);
 		Cinco.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Calculo.setText(Calculo.getText() + "5");
+				borrarError();
 			}
 		});		
 		Cinco.setText("5");
-		Cinco.setBounds(106, 211, 47, 40);
+		Cinco.setBounds(111, 223, 43, 36);
 		Cinco.addHover();
 		frame.getContentPane().add(Cinco);	
 		
 		
 		JComponentOval Seis = new JComponentOval(10);
+		Seis.setBackground(Color.GRAY);
 		Seis.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Seis.setFont(new Font("Calibri", Font.BOLD, 17));
 		Seis.setContentAreaFilled(false);
 		Seis.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Calculo.setText(Calculo.getText() + "6");
+				borrarError();
 			}
 		});		
 		Seis.setText("6");
-		Seis.setBounds(162, 213, 47, 40);
+		Seis.setBounds(164, 223, 43, 36);
 		Seis.addHover();
 		frame.getContentPane().add(Seis);
 		
 		JComponentOval Sieste = new JComponentOval(10);
+		Sieste.setBackground(Color.GRAY);
 		Sieste.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Sieste.setFont(new Font("Calibri", Font.BOLD, 17));
 		Sieste.setContentAreaFilled(false);
 		Sieste.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Calculo.setText(Calculo.getText() + "7");
+				borrarError();
 			}
 		});		
 		Sieste.setText("7");
-		Sieste.setBounds(49, 262, 47, 40);
+		Sieste.setBounds(58, 270, 43, 36);
 		Sieste.addHover();
 		frame.getContentPane().add(Sieste);
 		
 		JComponentOval Ocho = new JComponentOval(10);
+		Ocho.setBackground(Color.GRAY);
 		Ocho.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Ocho.setFont(new Font("Calibri", Font.BOLD, 17));
 		Ocho.setContentAreaFilled(false);
 		Ocho.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Calculo.setText(Calculo.getText() + "8");
+				borrarError();
 			}
 		});		
 		Ocho.setText("8");
-		Ocho.setBounds(106, 262, 47, 40);
+		Ocho.setBounds(111, 270, 43, 36);
 		Ocho.addHover();
 		frame.getContentPane().add(Ocho);
 		
 		JComponentOval Nueve = new JComponentOval(10);
+		Nueve.setBackground(Color.GRAY);
 		Nueve.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Nueve.setFont(new Font("Calibri", Font.BOLD, 17));
 		Nueve.setContentAreaFilled(false);
 		Nueve.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Calculo.setText(Calculo.getText() + "9");
+				borrarError();
 			}
 		});		
 		Nueve.setText("9");
-		Nueve.setBounds(162, 262, 47, 40);
+		Nueve.setBounds(164, 270, 43, 36);
 		Nueve.addHover();
 		frame.getContentPane().add(Nueve);
-		
+
 		JComponentOval Cero = new JComponentOval(10);
+		Cero.setBackground(Color.GRAY);
 		Cero.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Cero.setFont(new Font("Calibri", Font.BOLD, 17));
 		Cero.setContentAreaFilled(false);
 		Cero.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Calculo.setText(Calculo.getText() + "0");
+				borrarError();
 			}
 		});		
 		Cero.setText("0");
-		Cero.setBounds(49, 313, 104, 40);
+		Cero.setBounds(58, 317, 43, 36);
 		Cero.addHover();
 		frame.getContentPane().add(Cero);
+		Ac.setBackground(Color.GRAY);
 	
 		
-		
-		JComponentOval Ac = new JComponentOval(10);
+
 		Ac.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Ac.setFont(new Font("Calibri", Font.BOLD, 17));
 		Ac.setContentAreaFilled(false);
@@ -245,31 +284,39 @@ public class OperacionesBasicas {
 			}
 		});		
 		Ac.setText("AC");
-		Ac.setBounds(274, 162, 47, 40);
+		Ac.setBounds(270, 176, 43, 36);
 		frame.getContentPane().add(Ac);
-		
-		JComponentOval Por = new JComponentOval(10);
+		Por.setBackground(Color.GRAY);
+
 		Por.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Por.setFont(new Font("Calibri", Font.BOLD, 17));
 		Por.setContentAreaFilled(false);
 		Por.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				borrarError();
+				if(noAntesDeOperador()) {
+					return;
+				}
 				Calculo.setText(Calculo.getText() + "x");
 			}
 		});		
 		Por.setText("x");
-		Por.setBounds(217, 213, 47, 40);
+		Por.setBounds(217, 223, 43, 36);
 		Por.addHover();
 		frame.getContentPane().add(Por);
-		
-		JComponentOval Del = new JComponentOval(10);
+		Del.setBackground(Color.GRAY);
+
 		Del.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Est.CompOvalColorEstandar(Del);
 		Del.setFont(new Font("Calibri", Font.BOLD, 17));
 		Del.setContentAreaFilled(false);
 		Del.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				borrarError();
 				String txt = Calculo.getText();
+				if(noAntesDeOperador()) {
+					countPunto=1;
+				}
 				if(Calculo.getText().length()==0) {
 					return;
 				} else {
@@ -278,79 +325,143 @@ public class OperacionesBasicas {
 			}
 		});	
 		Del.setText("DEL");
-		Del.setBounds(217, 162, 47, 40);
+		Del.setBounds(217, 176, 43, 36);
 		frame.getContentPane().add(Del);
+		Punto.setBackground(Color.GRAY);
 		
-		JComponentOval Punto = new JComponentOval(10);
 		Punto.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Punto.setFont(new Font("Calibri", Font.BOLD, 17));
 		Punto.setContentAreaFilled(false);
 		Punto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				borrarError();
+				if(Calculo.getText().length()==0){
+					Calculo.setText(Calculo.getText() + ".");
+					countPunto++;
+					return;
+				}
+				if(noAntesDeOperador()) {
+					return;
+				}
+				if(countPunto!=0) {
+					return;
+				}
 				Calculo.setText(Calculo.getText() + ".");
+				countPunto++;
 			}
 		});		
 		Punto.setText(".");
-		Punto.setBounds(162, 313, 47, 40);
+		Punto.setBounds(111, 317, 43, 36);
 		Punto.addHover();
 		frame.getContentPane().add(Punto);
-		
-		JComponentOval Mas = new JComponentOval(10);
+		Mas.setBackground(Color.GRAY);
+
 		Mas.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Mas.setFont(new Font("Calibri", Font.BOLD, 17));
 		Mas.setContentAreaFilled(false);
 		Mas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				borrarError();
+				if(noAntesDeOperador()) {
+					return;
+				}
 				Calculo.setText(Calculo.getText() + "+");
+				countPunto=0;
 			}
 		});		
 		Mas.setText("+");
-		Mas.setBounds(217, 262, 47, 40);
+		Mas.setBounds(217, 269, 43, 36);
 		Mas.addHover();
 		frame.getContentPane().add(Mas);
+		Resta.setBackground(Color.GRAY);
 		
-		
-		JComponentOval Resta = new JComponentOval(10);
+
 		Resta.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Resta.setFont(new Font("Calibri", Font.BOLD, 17));
 		Resta.setContentAreaFilled(false);
 		Resta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				borrarError();
+				if(Calculo.getText().length()==0){
+					Calculo.setText(Calculo.getText() + "-");
+					return;
+				}
+				if(noAntesDeOperador()) {
+					return;
+				}
 				Calculo.setText(Calculo.getText() + "-");
 			}
 		});		
 		Resta.setText("-");
-		Resta.setBounds(274, 262, 47, 40);
+		Resta.setBounds(270, 270, 43, 36);
 		Resta.addHover();
 		frame.getContentPane().add(Resta);
+		Dividir.setBackground(Color.GRAY);
 		
-		
-		JComponentOval Dividir = new JComponentOval(10);
+
 		Dividir.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Dividir.setFont(new Font("Calibri", Font.BOLD, 17));
 		Dividir.setContentAreaFilled(false);
 		Dividir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				borrarError();
+				if(noAntesDeOperador()) {
+					return;
+				}
 				Calculo.setText(Calculo.getText() + "/");
+				countPunto=0;
 			}
 		});		
 		Dividir.setText("/");
-		Dividir.setBounds(274, 213, 47, 40);
+		Dividir.setBounds(270, 224, 43, 36);
 		Dividir.addHover();
 		frame.getContentPane().add(Dividir);
+
+		Potencia.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				borrarError();
+				if(noAntesDeOperador()) {
+					return;
+				}
+				Calculo.setText(Calculo.getText() + "^");
+			}
+		});
+		Potencia.setText("^");
+		Potencia.setFont(new Font("Calibri", Font.BOLD, 17));
+		Potencia.setContentAreaFilled(false);
+		Potencia.setBackground(Color.GRAY);
+		Potencia.setBounds(164, 317, 43, 36);
+		frame.getContentPane().add(Potencia);
 		
 		
-		JComponentOval Igual = new JComponentOval(10);
+		Raiz.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				borrarError();
+				if(noAntesDeOperador()) {
+					return;
+				}
+				Calculo.setText(Calculo.getText() + "√");
+			}
+		});
+		
+		
+		Raiz.setText("√");
+		Raiz.setFont(new Font("Calibri", Font.BOLD, 17));
+		Raiz.setContentAreaFilled(false);
+		Raiz.setBackground(Color.GRAY);
+		Raiz.setBounds(217, 317, 43, 36);
+		frame.getContentPane().add(Raiz);
+		
+		Igual.setBackground(Color.GRAY);
+		
+
 		Igual.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Igual.setFont(new Font("Calibri", Font.BOLD, 17));
 		Est.CompOvalColorEstandar(Igual);
 		Igual.setContentAreaFilled(false);
 		Igual.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				if(Calculo.getText().contains(".")||Calculo.getText().contains("/")) {
-					
-				}
+				borrarError();
 				
 				if(Calculo.getText().length()==0) {
 					return;
@@ -377,7 +488,7 @@ public class OperacionesBasicas {
 
 				for (int i = 0; i < calculos.size(); i++) {
 					String termino = calculos.get(i);
-					if (termino.contains("x") || termino.contains("/")) {
+					if (termino.contains("x") || termino.contains("/") || termino.contains("^")|| termino.contains("√")) {
 						double resultado = resolver(termino);
 						calculos.set(i, String.valueOf(resultado));
 					}
@@ -402,30 +513,33 @@ public class OperacionesBasicas {
 						}
 
 					}
-					
+					Registro.setVisible(true);
+					hacerRegistro(resultadoFinal);
 					try {
-						if(String.valueOf(resultadoFinal).substring(Calculo.getText().length()-1,Calculo.getText().length()+1).equals(".0")) {
+						if(String.valueOf(resultadoFinal).endsWith(".0")) {
 							Calculo.setText(String.valueOf(resultadoFinal).substring(0,Calculo.getText().length()-1));
 							return;
+						} else {
+							Calculo.setText(String.valueOf(roundToDecimals(resultadoFinal)));
+							return;
 						}
-					}
-					catch(StringIndexOutOfBoundsException ee) {
-						Calculo.setText(String.valueOf(roundToDecimals(resultadoFinal)));
-						return;
-					}
-					
-					Calculo.setText(String.valueOf(roundToDecimals(resultadoFinal)));
+					}catch(StringIndexOutOfBoundsException ee){
+							Calculo.setText(String.valueOf(roundToDecimals(resultadoFinal)));
+							return;
+						} 					
 					
 				} catch (NumberFormatException err) {
+						count--;
 						Calculo.setText("Error Sintactico: " + err.getMessage());
 				}
 			}
 		});
 		Igual.setText("=");
-		Igual.setBounds(217, 313, 104, 40);
+		Igual.setBounds(270, 317, 43, 36);
 		frame.getContentPane().add(Igual);
+		Atras.setBounds(10, 11, 47, 26);
 		
-		JComponentOval Atras = new JComponentOval(10);
+		Atras.setBackground(Color.DARK_GRAY);
 		Atras.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Atras.setFont(new Font("Calibri", Font.BOLD, 17));
 		Atras.setContentAreaFilled(false);
@@ -438,22 +552,47 @@ public class OperacionesBasicas {
 		});
 		Est.CompOvalColorEstandar(Atras);
 		Atras.setText("←");
-		Atras.setBounds(10, 11, 47, 32);
 		frame.getContentPane().add(Atras);
+		
+		Registro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		Registro.setText("Resgistro");
+		Registro.setBounds(267, 9, 87, 30);
+		frame.getContentPane().add(Registro);
+		
+		
+	}
+	
+
+	public boolean noAntesDeOperador() {
+		if(Calculo.getText().length()==0) {
+			return true;
+		}
+		String text=Calculo.getText();
+		int ultPos=Calculo.getText().length()-1;
+		
+		if(text.charAt(ultPos)=='.'||text.charAt(ultPos)=='+'||text.charAt(ultPos)=='-'
+				||text.charAt(ultPos)=='/'||text.charAt(ultPos)=='x'||text.charAt(ultPos)=='^'
+				||text.charAt(ultPos)=='√') {
+			return true;					
+		}
+		return false;
 	}
 	
 	public OperacionesBasicas() {
 		initialize();
 	}
 
-	public static double resolver(String calculo) {
+	public double resolver(String calculo) {
 		
 		List<String> calculos = new ArrayList<>();
 		List<Character> operaciones = new ArrayList<>();
 		int terminoIndice = 0;
 		
 		for (int x = 0; x < calculo.length(); x++) {
-			if (calculo.charAt(x) == 'x' || calculo.charAt(x) == '/') {
+			if (calculo.charAt(x) == 'x' || calculo.charAt(x) == '/'|| calculo.charAt(x) == '^'|| calculo.charAt(x) == '√') {
 				String calculito = calculo.substring(terminoIndice, x);
 				terminoIndice = x + 1;
 				calculos.add(calculito);
@@ -482,6 +621,10 @@ public class OperacionesBasicas {
 					resultado *= siguienteNumero;
 				} else if (operacion == '/') {
 					resultado /= siguienteNumero;
+				} else if (operacion == '^') {
+					resultado = Math.pow(resultado,siguienteNumero);
+				} else if (operacion == '√') {
+					resultado = sqrt(siguienteNumero,resultado);
 				}
 				
 			}
@@ -493,9 +636,29 @@ public class OperacionesBasicas {
 		return resultado;
 	}
 	
+	public double sqrt(double number, double root) {
+        if (number < 0 && root % 2 == 0) {
+            Calculo.setText("No se puede hacer raiz de un numero negativo. ");
+            return -1;
+        }
+        return Math.pow(number, 1.0 / root);
+    }
+	
 	public static double roundToDecimals(double value) {
     	int decimals = 5;
         double scale = Math.pow(10, decimals);
         return Math.round(value * scale) / scale;
     }
+	
+	public void borrarError() {
+		if(Calculo.getText().startsWith("Error Sintactico:")) {
+			Calculo.setText("");
+		}
+	}
+	
+	public void hacerRegistro(double resultado) {
+		registros.add(Calculo.getText() + " = " + resultado);
+		// for(String txt : registros) {System.out.println(txt);}
+		
+	}
 }

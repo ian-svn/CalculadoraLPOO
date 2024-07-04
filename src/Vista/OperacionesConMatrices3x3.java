@@ -36,7 +36,12 @@ public class OperacionesConMatrices3x3 {
 	private int AcCount = 0;
 	private int modo = 0;
 	
-
+	private JComponentOval punto = new JComponentOval(10);
+	private JComponentOval menos = new JComponentOval(10);
+	
+	private int countPunto = 0;
+	private int countMenos = 0;
+	
 	private JComponentOvalTF Input00 = new JComponentOvalTF(5);
 	private JComponentOvalTF Input01 = new JComponentOvalTF(5);
 	private JComponentOvalTF Input02 = new JComponentOvalTF(5);
@@ -139,6 +144,51 @@ public class OperacionesConMatrices3x3 {
 		frame.getContentPane().add(CalculoResuelto, BorderLayout.NORTH);
 
 
+		menos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textField = usarTextField();
+				if(countMenos>0) {
+					return;
+				}
+				if(textField.getText().length()!=0) {
+					return;
+				}
+				textField.setText(textField.getText() + "-");
+				countMenos++;
+			}
+		});
+		menos.setText("-");
+		menos.setBackground(Color.GRAY);
+		menos.setBounds(188, 285, 39, 29);
+		frame.getContentPane().add(menos);
+		punto.setBounds(188, 245, 39, 29);
+		
+		punto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textField = usarTextField();
+				
+				if(textField.getText().length()==0) {
+					return;
+				}
+				if(textField.getText().contains(".")) {
+					return;
+				}
+				int dim = textField.getText().length();
+				if(textField.getText().charAt(dim-1)==' '||textField.getText().charAt(dim-1)=='.') {
+					return;
+				}
+				if(countPunto!=0) {
+					return;
+				}
+				countPunto++;
+				textField.setText(textField.getText() + ".");
+			}
+		});
+		punto.setText(".");
+		punto.setForeground(Color.WHITE);
+		punto.setFont(new Font("Calibri", Font.BOLD, 17));
+		frame.getContentPane().add(punto);
+		
 		
 		JLabel aviso_1 = new JLabel("Aviso: Se aclara que para pasar a la siguiente posicion se debera tocar la flecha ");
 		aviso_1.setForeground(Color.WHITE);
@@ -165,7 +215,7 @@ public class OperacionesConMatrices3x3 {
 		frame.getContentPane().add(Atras);
 		
 		JComponentOval Uno = new JComponentOval(10);
-		Uno.setBounds(46, 245, 39, 29);
+		Uno.setBounds(41, 245, 39, 29);
 		Uno.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Uno.setFont(new Font("Calibri", Font.BOLD, 17));
 		Uno.setContentAreaFilled(false);
@@ -181,7 +231,7 @@ public class OperacionesConMatrices3x3 {
 		frame.getContentPane().add(Uno);
 		
 		JComponentOval Dos = new JComponentOval(10);
-		Dos.setBounds(95, 245, 39, 29);
+		Dos.setBounds(90, 245, 39, 29);
 		Dos.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Dos.setFont(new Font("Calibri", Font.BOLD, 17));
 		Dos.setContentAreaFilled(false);
@@ -197,7 +247,7 @@ public class OperacionesConMatrices3x3 {
 		frame.getContentPane().add(Dos);
 		
 		JComponentOval Tres = new JComponentOval(10);
-		Tres.setBounds(144, 245, 39, 29);
+		Tres.setBounds(139, 245, 39, 29);
 		Tres.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Tres.setFont(new Font("Calibri", Font.BOLD, 17));
 		Tres.setContentAreaFilled(false);
@@ -213,7 +263,7 @@ public class OperacionesConMatrices3x3 {
 		frame.getContentPane().add(Tres);
 		
 		JComponentOval Cuatro = new JComponentOval(10);
-		Cuatro.setBounds(46, 285, 39, 29);
+		Cuatro.setBounds(41, 285, 39, 29);
 		Cuatro.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Cuatro.setFont(new Font("Calibri", Font.BOLD, 17));
 		Cuatro.setContentAreaFilled(false);
@@ -230,7 +280,7 @@ public class OperacionesConMatrices3x3 {
 		
 		
 		JComponentOval Cinco = new JComponentOval(10);
-		Cinco.setBounds(95, 285, 39, 29);
+		Cinco.setBounds(90, 285, 39, 29);
 		Cinco.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Cinco.setFont(new Font("Calibri", Font.BOLD, 17));
 		Cinco.setContentAreaFilled(false);
@@ -247,7 +297,7 @@ public class OperacionesConMatrices3x3 {
 		
 		
 		JComponentOval Seis = new JComponentOval(10);
-		Seis.setBounds(144, 285, 39, 29);
+		Seis.setBounds(139, 285, 39, 29);
 		Seis.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Seis.setFont(new Font("Calibri", Font.BOLD, 17));
 		Seis.setContentAreaFilled(false);
@@ -263,7 +313,7 @@ public class OperacionesConMatrices3x3 {
 		frame.getContentPane().add(Seis);
 		
 		JComponentOval Siete = new JComponentOval(10);
-		Siete.setBounds(46, 325, 39, 29);
+		Siete.setBounds(41, 325, 39, 29);
 		Siete.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Siete.setFont(new Font("Calibri", Font.BOLD, 17));
 		Siete.setContentAreaFilled(false);
@@ -279,7 +329,7 @@ public class OperacionesConMatrices3x3 {
 		frame.getContentPane().add(Siete);
 		
 		JComponentOval Ocho = new JComponentOval(10);
-		Ocho.setBounds(95, 325, 39, 29);
+		Ocho.setBounds(90, 325, 39, 29);
 		Ocho.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Ocho.setFont(new Font("Calibri", Font.BOLD, 17));
 		Ocho.setContentAreaFilled(false);
@@ -295,7 +345,7 @@ public class OperacionesConMatrices3x3 {
 		frame.getContentPane().add(Ocho);
 		
 		JComponentOval Nueve = new JComponentOval(10);
-		Nueve.setBounds(144, 325, 39, 29);
+		Nueve.setBounds(139, 325, 39, 29);
 		Nueve.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Nueve.setFont(new Font("Calibri", Font.BOLD, 17));
 		Nueve.setContentAreaFilled(false);
@@ -311,7 +361,7 @@ public class OperacionesConMatrices3x3 {
 		frame.getContentPane().add(Nueve);
 		
 		JComponentOval Cero = new JComponentOval(10);
-		Cero.setBounds(193, 325, 58, 29);
+		Cero.setBounds(188, 325, 39, 29);
 		Cero.setBackground(Color.GRAY);
 		Cero.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Cero.setFont(new Font("Calibri", Font.BOLD, 17));
@@ -333,7 +383,7 @@ public class OperacionesConMatrices3x3 {
 		AvisoMatriz.setBounds(20, 60, 161, 20);
 		frame.getContentPane().add(AvisoMatriz);
 		
-		Ac.setBounds(261, 245, 59, 29);
+		Ac.setBounds(288, 245, 39, 29);
 		Est.CompOvalColorEstandar(Ac);
 		Ac.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Ac.setFont(new Font("Calibri", Font.BOLD, 17));
@@ -341,6 +391,11 @@ public class OperacionesConMatrices3x3 {
 		Ac.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AcHacer();
+				if(textField.getText().endsWith("-")) {
+					countMenos=0;
+				} if(textField.getText().endsWith(".")) {
+					countPunto=0;
+				}
 				textField = usarTextField();
 				textField.setText("");
 			}
@@ -349,7 +404,7 @@ public class OperacionesConMatrices3x3 {
 		frame.getContentPane().add(Ac);
 		
 		JComponentOval Del = new JComponentOval(10);
-		Del.setBounds(193, 245, 58, 29);
+		Del.setBounds(237, 245, 41, 29);
 		Est.CompOvalColorEstandar(Del);
 		Del.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Del.setFont(new Font("Calibri", Font.BOLD, 17));
@@ -357,6 +412,11 @@ public class OperacionesConMatrices3x3 {
 		Del.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				resetAc();
+				if(textField.getText().endsWith("-")) {
+					countMenos=0;
+				} if(textField.getText().endsWith(".")) {
+					countPunto=0;
+				}
 				textField = usarTextField();
 				String txt = textField.getText();
 				if(txt.length()==0) {
@@ -370,7 +430,7 @@ public class OperacionesConMatrices3x3 {
 		frame.getContentPane().add(Del);
 		
 		JComponentOval siguiente = new JComponentOval(10);
-		siguiente.setBounds(262, 285, 58, 29);
+		siguiente.setBounds(288, 285, 39, 29);
 		siguiente.setBackground(Color.GRAY);
 		siguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -388,7 +448,7 @@ public class OperacionesConMatrices3x3 {
 		frame.getContentPane().add(siguiente);
 		
 		JComponentOval anterior = new JComponentOval(10);
-		anterior.setBounds(193, 285, 58, 29);
+		anterior.setBounds(237, 285, 41, 29);
 		anterior.setBackground(Color.GRAY);
 		anterior.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -451,7 +511,7 @@ public class OperacionesConMatrices3x3 {
 		});
 		Suma.setVisible(false);
 		Suma.setText("+");
-		Suma.setBounds(23, 241, 40, 39);
+		Suma.setBounds(29, 241, 40, 39);
 		frame.getContentPane().add(Suma);
 		
 		JComponentOval Resta = new JComponentOval(5);
@@ -469,7 +529,7 @@ public class OperacionesConMatrices3x3 {
 		});
 		Resta.setVisible(false);
 		Resta.setText("-");
-		Resta.setBounds(73, 241, 40, 39);
+		Resta.setBounds(76, 241, 40, 39);
 		frame.getContentPane().add(Resta);
 		
 		JComponentOval Multiplicar = new JComponentOval(5);
@@ -484,7 +544,7 @@ public class OperacionesConMatrices3x3 {
 		});
 		Multiplicar.setVisible(false);
 		Multiplicar.setText("Multiplicar");
-		Multiplicar.setBounds(23, 336, 90, 39);
+		Multiplicar.setBounds(29, 336, 90, 39);
 		frame.getContentPane().add(Multiplicar);
 		
 		JComponentOval Division = new JComponentOval(5);
@@ -500,7 +560,7 @@ public class OperacionesConMatrices3x3 {
 	});
 		Division.setVisible(false);
 		Division.setText("Division");
-		Division.setBounds(23, 288, 90, 39);
+		Division.setBounds(29, 288, 90, 39);
 		frame.getContentPane().add(Division);
 		
 		JComponentOval MultiEscalar1 = new JComponentOval(5);
@@ -523,6 +583,8 @@ public class OperacionesConMatrices3x3 {
 				Ocho.setVisible(true);
 				Nueve.setVisible(true);
 				Cero.setVisible(true);
+				menos.setVisible(true);
+				punto.setVisible(true);
 				Del.setVisible(true);
 				Ac.setVisible(true);
 				Suma.setVisible(false);
@@ -571,6 +633,8 @@ public class OperacionesConMatrices3x3 {
 						Ocho.setVisible(false);
 						Nueve.setVisible(false);
 						Cero.setVisible(false);
+						punto.setVisible(false);
+						menos.setVisible(false);
 						siguiente.setVisible(false); 
 						anterior.setVisible(false);
 						Ac.setVisible(false);
@@ -609,7 +673,7 @@ public class OperacionesConMatrices3x3 {
 		MultiEscalar1.setFont(new Font("Calibri", Font.BOLD, 16));
 		MultiEscalar1.setText("MultiEscalar1");
 		MultiEscalar1.setVisible(false);
-		MultiEscalar1.setBounds(125, 288, 105, 39);
+		MultiEscalar1.setBounds(131, 288, 105, 39);
 		frame.getContentPane().add(MultiEscalar1);
 		
 		MultiEscalar2.setFont(new Font("Calibri", Font.BOLD, 16));
@@ -634,6 +698,8 @@ public class OperacionesConMatrices3x3 {
 				Cero.setVisible(true);
 				Del.setVisible(true);
 				Ac.setVisible(true);
+				punto.setVisible(true);
+				menos.setVisible(true);
 				Suma.setVisible(false);
 				Resta.setVisible(false);
 				Multiplicar.setVisible(false);
@@ -684,6 +750,8 @@ public class OperacionesConMatrices3x3 {
 						Cero.setVisible(false);
 						siguiente.setVisible(false); 
 						anterior.setVisible(false);
+						punto.setVisible(false);
+						menos.setVisible(false);
 						Ac.setVisible(false);
 						Del.setVisible(false);
 						AvisoMatriz.setVisible(false);
@@ -719,7 +787,7 @@ public class OperacionesConMatrices3x3 {
 		});
 		MultiEscalar2.setVisible(false);
 		MultiEscalar2.setText("MultiEscalar2");
-		MultiEscalar2.setBounds(240, 288, 105, 39);
+		MultiEscalar2.setBounds(246, 288, 105, 39);
 		frame.getContentPane().add(MultiEscalar2);
 		
 		Determinante.setFont(new Font("Calibri", Font.BOLD, 16));
@@ -736,7 +804,7 @@ public class OperacionesConMatrices3x3 {
 		});
 		Determinante.setVisible(false);
 		Determinante.setText("Determinante2");
-		Determinante.setBounds(240, 336, 105, 39);
+		Determinante.setBounds(246, 336, 105, 39);
 		frame.getContentPane().add(Determinante);
 		
 		Determinante2.setFont(new Font("Calibri", Font.BOLD, 16));
@@ -753,7 +821,7 @@ public class OperacionesConMatrices3x3 {
 		});
 		Determinante2.setVisible(false);
 		Determinante2.setText("Determinante");
-		Determinante2.setBounds(123, 336, 105, 39);
+		Determinante2.setBounds(129, 336, 105, 39);
 		frame.getContentPane().add(Determinante2);
 		
 		Inversa.setFont(new Font("Calibri", Font.BOLD, 16));
@@ -768,7 +836,7 @@ public class OperacionesConMatrices3x3 {
 		});
 		Inversa.setVisible(false);
 		Inversa.setText("Inversa");
-		Inversa.setBounds(123, 241, 105, 39);
+		Inversa.setBounds(129, 241, 105, 39);
 		frame.getContentPane().add(Inversa);
 		
 		Inversa2.setFont(new Font("Calibri", Font.BOLD, 16));
@@ -783,7 +851,7 @@ public class OperacionesConMatrices3x3 {
 		});
 		Inversa2.setVisible(false);
 		Inversa2.setText("Inversa2");
-		Inversa2.setBounds(240, 241, 105, 39);
+		Inversa2.setBounds(246, 241, 105, 39);
 		frame.getContentPane().add(Inversa2);
 
 		Restablecer.addActionListener(new ActionListener() {
@@ -839,7 +907,7 @@ public class OperacionesConMatrices3x3 {
 		
 		
 		
-		igual.setBounds(263, 325, 58, 29);
+		igual.setBounds(237, 325, 90, 29);
 		Est.CompOvalColorEstandar(igual);
 		igual.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -939,6 +1007,8 @@ public class OperacionesConMatrices3x3 {
 					Cero.setVisible(false);
 					siguiente.setVisible(false); 
 					anterior.setVisible(false);
+					punto.setVisible(false);
+					menos.setVisible(false);
 					Ac.setVisible(false);
 					Del.setVisible(false);
 					AvisoMatriz.setVisible(false);
@@ -1594,5 +1664,4 @@ public class OperacionesConMatrices3x3 {
 
         return adjunta;
     }
-    
 }

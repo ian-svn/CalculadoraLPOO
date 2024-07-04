@@ -333,10 +333,14 @@
 			JComponentOval punto = new JComponentOval(10);
 			punto.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					textField = usarTextField();
+					if(textField.getText().contains(".")) {
+						return;
+					}
 					if(countPunto>0) {
 						return;
 					}
-					textField = usarTextField();
+					
 					textField.setText(textField.getText() + ".");
 					countPunto++;
 				}
@@ -516,33 +520,43 @@
 					}
 					
 			        double a1 = Double.parseDouble(InputA1.getText());
-			        
 			        double b1 = Double.parseDouble(InputB1.getText());
-			        
-			        char operador1 = '+';
-			        
 			        double c1 = Double.parseDouble(InputTI1.getText());
 
 			        double a2 = Double.parseDouble(InputA2.getText());
-			        
 			        double b2 = Double.parseDouble(InputB2.getText());
-			        
-			        char operador2 = '+';
 			        double c2 = Double.parseDouble(InputTI2.getText());
 
-			        
 			        double[][] A = { {a1, b1}, {a2, b2} };
 			        double[] B = { c1, c2 };
 
-			        
-			        double[] solucion = resolverSistema(A, B);
-			        if (solucion != null) {
-			        	CalculoResolver.setText("x = " + String.format("%.2f", solucion[0]));
-			            CalculoResolver.setText(CalculoResolver.getText() + "    y = " + String.format("%.2f", solucion[1]));
+			        String result = resolverSistema(A, B);
+			        CalculoResolver.setText(result);
+			    }
+
+			    public static String resolverSistema(double[][] A, double[] B) {
+			        double a1 = A[0][0];
+			        double b1 = A[0][1];
+			        double a2 = A[1][0];
+			        double b2 = A[1][1];
+			        double c1 = B[0];
+			        double c2 = B[1];
+
+			        double det = a1 * b2 - a2 * b1;
+
+			        if (det == 0) {
+			            if (a1 / a2 == b1 / b2 && a1 / a2 == c1 / c2) {
+			                return "El sistema de ecuaciones tiene infinitas soluciones.";
+			            } else {
+			                return "El sistema de ecuaciones no tiene solución.";
+			            }
 			        } else {
-			        	CalculoResolver.setText("El sistema de ecuaciones no tiene solucion unica.");
+			            double x = (c1 * b2 - c2 * b1) / det;
+			            double y = (a1 * c2 - a2 * c1) / det;
+			            return "x = " + String.format("%.2f", x) + "    y = " + String.format("%.2f", y);
 			        }
-				}
+			    }
+				
 			});
 			igual.setText("=");
 			igual.setFont(new Font("Calibri", Font.BOLD, 17));
@@ -563,12 +577,7 @@
 				Ac.setBackground(new Color(180,0,0));
 				Ac.addHover(new Color(230,0,0));
 			} else if(AcCount>1) {
-				InputA1.setText("");
-				InputB1.setText("");
-				InputTI1.setText("");
-				InputA2.setText("");
-				InputB2.setText("");
-				InputTI2.setText("");
+				reset();
 				AcCount=0;
 				Est.CompOvalColorEstandar(Ac);
 			}
@@ -634,5 +643,27 @@
 
         return new double[] { x, y };
     }
+	
+	public void reset() {
+
+		InputA1.setText("");
+		InputB1.setText("");
+		InputTI1.setText("");
+		InputA2.setText("");
+		InputB2.setText("");
+		InputTI2.setText("");
+		
+
+		InputA1.setBackground(new Color(150,150,150));
+		InputB1.setBackground(Color.GRAY);
+		InputTI1.setBackground(Color.GRAY);
+		InputA2.setBackground(Color.GRAY);
+		InputB2.setBackground(Color.GRAY);
+		InputTI2.setBackground(Color.GRAY);
+		count=0;
+		
+		
+		usarTextField();
+	}
 }
 	

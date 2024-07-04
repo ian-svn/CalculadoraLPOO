@@ -36,6 +36,7 @@ public class OperacionesConMatrices2x2 {
 	private JComponentOvalTF Resultado2 = new JComponentOvalTF(0);
 	private JComponentOval menos = new JComponentOval(10);
 	private JComponentOval punto = new JComponentOval(10);
+	private JComponentOval Del = new JComponentOval(10);
 	private int cantVecesIgual = 0;
 	private int count = 0;
 	private int AcCount = 0;
@@ -57,6 +58,8 @@ public class OperacionesConMatrices2x2 {
 	private JComponentOval MultiEscalar2 = new JComponentOval(5);
 	private JComponentOvalTF InputPE = new JComponentOvalTF(10);
 	private JComponentOval igual = new JComponentOval(10);
+	private JComponentOval igual2 = new JComponentOval(10);
+	
 	private JLabel LMatriz2 = new JLabel("Matriz 2");
 	
 	private int modo = 0;
@@ -387,6 +390,9 @@ public class OperacionesConMatrices2x2 {
 				if(textField.getText().length()==0) {
 					return;
 				}
+				if(textField.getText().contains(".")) {
+					return;
+				}
 				int dim = textField.getText().length();
 				if(textField.getText().charAt(dim-1)==' '||textField.getText().charAt(dim-1)=='.') {
 					return;
@@ -426,7 +432,6 @@ public class OperacionesConMatrices2x2 {
 		Ac.setText("AC");
 		frame.getContentPane().add(Ac);
 		
-		JComponentOval Del = new JComponentOval(10);
 		Del.setBounds(230, 241, 39, 29);
 		Est.CompOvalColorEstandar(Del);
 		Del.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -436,6 +441,11 @@ public class OperacionesConMatrices2x2 {
 			public void actionPerformed(ActionEvent e) {
 				resetAc();
 				textField = usarTextField();
+				if(textField.getText().endsWith("-")) {
+					countMenos=0;
+				} if(textField.getText().endsWith(".")) {
+					countPunto=0;
+				}
 				String txt = textField.getText();
 				if(txt.length()==0) {
 					return;
@@ -453,7 +463,8 @@ public class OperacionesConMatrices2x2 {
 		siguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				resetAc();
-				comaCount=0;
+				countMenos=0;
+				countPunto=0;
 				aviso_1.setVisible(false);
 				aviso_2.setVisible(false);
 				usarTextField().setBackground((Color.GRAY));
@@ -470,7 +481,8 @@ public class OperacionesConMatrices2x2 {
 		anterior.setBackground(Color.GRAY);
 		anterior.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				comaCount=0;
+				countPunto=0;
+				countMenos=0;
 				resetAc();
 				aviso_1.setVisible(false);
 				aviso_2.setVisible(false);
@@ -574,8 +586,97 @@ public class OperacionesConMatrices2x2 {
 		Division.setText("Division");
 		Division.setBounds(23, 283, 90, 39);
 		frame.getContentPane().add(Division);
-		
+		igual2.setBounds(278, 321, 46, 29);
+		Est.CompOvalColorEstandar(igual2);
+
 		JComponentOval MultiEscalar1 = new JComponentOval(5);
+		
+		igual2.setText("=");
+		igual2.setFont(new Font("Calibri", Font.BOLD, 17));
+		igual2.setContentAreaFilled(false);
+		igual2.setVisible(false);
+		igual2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(InputPE.getText().length()==0) {
+					return;
+				}
+				int flag=0;
+				if(InputPE.getText().contains(".")&&InputPE.getText().contains("-")) {
+					
+					for(int x=0;x<InputPE.getText().length()-1;x++) {
+						int count = 0;
+						if(InputPE.getText().charAt(x)=='.'||InputPE.getText().charAt(x)=='.') {
+							count++;
+						}
+						if(InputPE.getText().charAt(x+1)=='-'||InputPE.getText().charAt(x)=='.') {
+							count++;
+						}
+						if(count==2) {
+							flag = 1;
+						}
+					}
+				}
+				if(flag==1) {
+					return;
+				}
+				if(InputPE.getText().length()==0) {
+					return;
+				}
+				double MatrizResultado[][] = multiplicacionEscalarMatriz(matriz2,Double.parseDouble(InputPE.getText()));
+				InputPE.setText("");
+				
+				mostrarResultados(MatrizResultado);
+				
+				InputPE.setVisible(false);
+				
+				devuelta.setVisible(false);
+				igual.setVisible(false);
+				Uno.setVisible(false);
+				Dos.setVisible(false);
+				Tres.setVisible(false);
+				Cuatro.setVisible(false);
+				Cinco.setVisible(false);
+				Seis.setVisible(false);
+				Siete.setVisible(false);
+				Ocho.setVisible(false);
+				Nueve.setVisible(false);
+				Cero.setVisible(false);
+				siguiente.setVisible(false); 
+				anterior.setVisible(false);
+				Ac.setVisible(false);
+				Del.setVisible(false);
+				punto.setVisible(false);
+				menos.setVisible(false);
+				AvisoMatriz.setVisible(false);
+				Input00.setVisible(false);
+				Input01.setVisible(false);
+				Input10.setVisible(false);
+				Input11.setVisible(false);
+
+				Suma.setVisible(true);
+				Resta.setVisible(true);
+				Multiplicar.setVisible(true);
+				Division.setVisible(true);
+				MultiEscalar1.setVisible(true);
+				MultiEscalar2.setVisible(true);
+				Determinante.setVisible(true);
+				Determinante2.setVisible(true);
+				Inversa.setVisible(true);
+				Inversa2.setVisible(true);
+				PanelResultado.setVisible(true);
+				Restablecer.setVisible(true);
+				Restablecer.setVisible(true);
+				TFmatriz1_1.setVisible(true);
+				TFmatriz1_2.setVisible(true);
+				TFmatriz2_1.setVisible(true);
+				TFmatriz2_2.setVisible(true);
+				LMatriz1.setVisible(true);
+				LMatriz2.setVisible(true);
+				igual2.setVisible(false);
+			}
+		});
+		frame.getContentPane().add(igual2);
+		
 		MultiEscalar1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -583,7 +684,6 @@ public class OperacionesConMatrices2x2 {
 				
 				InputPE.setVisible(true);
 				
-				igual.setVisible(true);
 				Uno.setVisible(true);
 				Dos.setVisible(true);
 				Tres.setVisible(true);
@@ -616,65 +716,7 @@ public class OperacionesConMatrices2x2 {
 				TFmatriz2_2.setVisible(false);
 				LMatriz1.setVisible(false);
 				LMatriz2.setVisible(false);
-				
-				igual.setVisible(true);
-				
-				
-				igual.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-
-						double MatrizResultado[][] = multiplicacionEscalarMatriz(matriz1,Double.parseDouble(InputPE.getText()));
-						InputPE.setText("");
-						
-						mostrarResultados(MatrizResultado);
-						
-						InputPE.setVisible(false);
-						
-						devuelta.setVisible(false);
-						igual.setVisible(false);
-						Uno.setVisible(false);
-						Dos.setVisible(false);
-						Tres.setVisible(false);
-						Cuatro.setVisible(false);
-						Cinco.setVisible(false);
-						Seis.setVisible(false);
-						Siete.setVisible(false);
-						Ocho.setVisible(false);
-						Nueve.setVisible(false);
-						Cero.setVisible(false);
-						siguiente.setVisible(false); 
-						anterior.setVisible(false);
-						Ac.setVisible(false);
-						Del.setVisible(false);
-						punto.setVisible(false);
-						AvisoMatriz.setVisible(false);
-						Input00.setVisible(false);
-						Input01.setVisible(false);
-						Input10.setVisible(false);
-						Input11.setVisible(false);
-
-						Suma.setVisible(true);
-						Resta.setVisible(true);
-						Multiplicar.setVisible(true);
-						Division.setVisible(true);
-						MultiEscalar1.setVisible(true);
-						MultiEscalar2.setVisible(true);
-						Determinante.setVisible(true);
-						Determinante2.setVisible(true);
-						Inversa.setVisible(true);
-						Inversa2.setVisible(true);
-						PanelResultado.setVisible(true);
-						Restablecer.setVisible(true);
-						Restablecer.setVisible(true);
-						TFmatriz1_1.setVisible(true);
-						TFmatriz1_2.setVisible(true);
-						TFmatriz2_1.setVisible(true);
-						TFmatriz2_2.setVisible(true);
-						LMatriz1.setVisible(true);
-						LMatriz2.setVisible(true);
-					}
-				});
-				
+				igual2.setVisible(true);
 			}
 		});
 		MultiEscalar1.setFont(new Font("Calibri", Font.BOLD, 16));
@@ -686,7 +728,6 @@ public class OperacionesConMatrices2x2 {
 		MultiEscalar2.setFont(new Font("Calibri", Font.BOLD, 16));
 		MultiEscalar2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
 				modo=6;
 				
 				InputPE.setVisible(true);
@@ -724,67 +765,7 @@ public class OperacionesConMatrices2x2 {
 				LMatriz1.setVisible(false);
 				LMatriz2.setVisible(false);
 				
-				igual.setVisible(true);
-				
-				
-				igual.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						if(InputPE.getText().length()==0) {
-							return;
-						}
-						double MatrizResultado[][] = multiplicacionEscalarMatriz(matriz2,Double.parseDouble(InputPE.getText()));
-						InputPE.setText("");
-						
-						mostrarResultados(MatrizResultado);
-						
-						InputPE.setVisible(false);
-						
-						devuelta.setVisible(false);
-						igual.setVisible(false);
-						Uno.setVisible(false);
-						Dos.setVisible(false);
-						Tres.setVisible(false);
-						Cuatro.setVisible(false);
-						Cinco.setVisible(false);
-						Seis.setVisible(false);
-						Siete.setVisible(false);
-						Ocho.setVisible(false);
-						Nueve.setVisible(false);
-						Cero.setVisible(false);
-						siguiente.setVisible(false); 
-						anterior.setVisible(false);
-						Ac.setVisible(false);
-						Del.setVisible(false);
-						punto.setVisible(false);
-						menos.setVisible(false);
-						AvisoMatriz.setVisible(false);
-						Input00.setVisible(false);
-						Input01.setVisible(false);
-						Input10.setVisible(false);
-						Input11.setVisible(false);
-
-						Suma.setVisible(true);
-						Resta.setVisible(true);
-						Multiplicar.setVisible(true);
-						Division.setVisible(true);
-						MultiEscalar1.setVisible(true);
-						MultiEscalar2.setVisible(true);
-						Determinante.setVisible(true);
-						Determinante2.setVisible(true);
-						Inversa.setVisible(true);
-						Inversa2.setVisible(true);
-						PanelResultado.setVisible(true);
-						Restablecer.setVisible(true);
-						Restablecer.setVisible(true);
-						TFmatriz1_1.setVisible(true);
-						TFmatriz1_2.setVisible(true);
-						TFmatriz2_1.setVisible(true);
-						TFmatriz2_2.setVisible(true);
-						LMatriz1.setVisible(true);
-						LMatriz2.setVisible(true);
-					}
-				});
-				
+				igual2.setVisible(true);
 			}
 		});
 		MultiEscalar2.setVisible(false);
@@ -944,6 +925,12 @@ public class OperacionesConMatrices2x2 {
 		Est.CompOvalColorEstandar(igual);
 		igual.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(Input00.getText().endsWith("-")||Input10.getText().endsWith("-")||Input01.getText().endsWith("-")||Input11.getText().endsWith("-")) {
+					return;
+				}
+				if(Input00.getText().equals(".")||Input10.getText().equals(".")||Input01.getText().equals(".")||Input11.getText().equals(".")) {
+					return;
+				}
 				if(Input00.getText().length()!=0&&Input10.getText().length()!=0&&Input01.getText().length()==0&&Input11.getText().length()==0) {
 					modo=1;
 				}
