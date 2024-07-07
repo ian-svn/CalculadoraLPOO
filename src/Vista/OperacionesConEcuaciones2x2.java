@@ -334,6 +334,10 @@
 			punto.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					textField = usarTextField();
+					if(textField.getText().endsWith("-")) {
+						return;
+						
+					}
 					if(textField.getText().contains(".")) {
 						return;
 					}
@@ -354,6 +358,9 @@
 			JComponentOval menos = new JComponentOval(10);
 			menos.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					if(noAntesDeOperador()) {
+						return;
+					}
 					textField = usarTextField();
 					if(countMenos>0) {
 						return;
@@ -379,6 +386,8 @@
 			Ac.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					AcHacer();
+					countPunto=0;
+					countMenos=0;
 					textField = usarTextField();
 					textField.setText("");
 				}
@@ -548,7 +557,7 @@
 			            if (a1 / a2 == b1 / b2 && a1 / a2 == c1 / c2) {
 			                return "El sistema de ecuaciones tiene infinitas soluciones.";
 			            } else {
-			                return "El sistema de ecuaciones no tiene solución.";
+			                return "El sistema de ecuaciones no tiene solucion.";
 			            }
 			        } else {
 			            double x = (c1 * b2 - c2 * b1) / det;
@@ -664,6 +673,16 @@
 		
 		
 		usarTextField();
+	}
+	
+	public boolean noAntesDeOperador() {
+		
+		String text = usarTextField().getText();
+		
+		if(text.endsWith(".")||text.endsWith("-")) {
+			return true;
+		}
+		return false;
 	}
 }
 	

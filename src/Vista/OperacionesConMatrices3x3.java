@@ -173,6 +173,9 @@ public class OperacionesConMatrices3x3 {
 				if(textField.getText().contains(".")) {
 					return;
 				}
+				if(textField.getText().endsWith("-")) {
+					return;
+				}
 				int dim = textField.getText().length();
 				if(textField.getText().charAt(dim-1)==' '||textField.getText().charAt(dim-1)=='.') {
 					return;
@@ -232,6 +235,7 @@ public class OperacionesConMatrices3x3 {
 		
 		JComponentOval Dos = new JComponentOval(10);
 		Dos.setBounds(90, 245, 39, 29);
+		frame.getContentPane().add(Dos);
 		Dos.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Dos.setFont(new Font("Calibri", Font.BOLD, 17));
 		Dos.setContentAreaFilled(false);
@@ -243,8 +247,6 @@ public class OperacionesConMatrices3x3 {
 			}
 		});		
 		Dos.setText("2");
-		Dos.addHover();
-		frame.getContentPane().add(Dos);
 		
 		JComponentOval Tres = new JComponentOval(10);
 		Tres.setBounds(139, 245, 39, 29);
@@ -398,6 +400,8 @@ public class OperacionesConMatrices3x3 {
 				}
 				textField = usarTextField();
 				textField.setText("");
+				countMenos=0;
+				countPunto=0;
 			}
 		});		
 		Ac.setText("AC");
@@ -435,12 +439,13 @@ public class OperacionesConMatrices3x3 {
 		siguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				resetAc();
-
 				aviso_1.setVisible(false);
 				aviso_2.setVisible(false);
 				usarTextField().setBackground((Color.GRAY));
 				focusMasUno();
 				usarTextField().setBackground(new Color(150,150,150));
+				countMenos=0;
+				countPunto=0;
 			}
 		});
 		siguiente.addHover();
@@ -470,6 +475,8 @@ public class OperacionesConMatrices3x3 {
 				frame.setVisible(false);
 				OperacionesConMatricesMenu menu = new OperacionesConMatricesMenu();
 				menu.correr();
+				countMenos=0;
+				countPunto=0;
 			}
 		});
 		Atras.addHover(new Color(194,85,236));
@@ -529,7 +536,7 @@ public class OperacionesConMatrices3x3 {
 		});
 		Resta.setVisible(false);
 		Resta.setText("-");
-		Resta.setBounds(76, 241, 40, 39);
+		Resta.setBounds(80, 241, 40, 39);
 		frame.getContentPane().add(Resta);
 		
 		JComponentOval Multiplicar = new JComponentOval(5);
@@ -601,10 +608,10 @@ public class OperacionesConMatrices3x3 {
 				Restablecer.setVisible(false);
 				TFmatriz1_1.setVisible(false);
 				TFmatriz1_2.setVisible(false);
-				TFmatriz2_3.setVisible(true);
+				TFmatriz1_3.setVisible(false);
 				TFmatriz2_1.setVisible(false);
 				TFmatriz2_2.setVisible(false);
-				TFmatriz2_3.setVisible(true);
+				TFmatriz2_3.setVisible(false);
 				LMatriz1.setVisible(false);
 				LMatriz2.setVisible(false);
 				
@@ -613,7 +620,7 @@ public class OperacionesConMatrices3x3 {
 				
 				igual.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-
+						
 						Double MatrizResultado[][] = multiplicacionEscalarMatriz(matriz1,Double.parseDouble(InputPE.getText()));
 						InputPE.setText("");
 						
@@ -717,7 +724,7 @@ public class OperacionesConMatrices3x3 {
 				TFmatriz1_3.setVisible(false);
 				TFmatriz2_1.setVisible(false);
 				TFmatriz2_2.setVisible(false);
-				TFmatriz1_3.setVisible(false);
+				TFmatriz2_3.setVisible(false);
 				LMatriz1.setVisible(false);
 				LMatriz2.setVisible(false);
 				
@@ -778,7 +785,7 @@ public class OperacionesConMatrices3x3 {
 						TFmatriz1_3.setVisible(true);
 						TFmatriz2_1.setVisible(true);
 						TFmatriz2_2.setVisible(true);
-						TFmatriz1_3.setVisible(true);
+						TFmatriz2_3.setVisible(true);
 						LMatriz1.setVisible(true);
 						LMatriz2.setVisible(true);
 					}
@@ -880,15 +887,15 @@ public class OperacionesConMatrices3x3 {
 		frame.getContentPane().add(TFmatriz1_3);
 		TFmatriz2_1.setVisible(false);
 		TFmatriz2_1.setBackground(Color.DARK_GRAY);
-		TFmatriz2_1.setBounds(230, 11, 90, 15);
+		TFmatriz2_1.setBounds(217, 11, 89, 15);
 		frame.getContentPane().add(TFmatriz2_1);
 		TFmatriz2_2.setVisible(false);
 		TFmatriz2_2.setBackground(Color.DARK_GRAY);
-		TFmatriz2_2.setBounds(230, 29, 90, 13);
+		TFmatriz2_2.setBounds(217, 29, 89, 13);
 		frame.getContentPane().add(TFmatriz2_2);
 		TFmatriz2_3.setVisible(false);
 		TFmatriz2_3.setBackground(Color.DARK_GRAY);
-		TFmatriz2_3.setBounds(230, 50, 90, 13);
+		TFmatriz2_3.setBounds(217, 50, 89, 13);
 		frame.getContentPane().add(TFmatriz2_3);
 		
 		LMatriz1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -911,7 +918,16 @@ public class OperacionesConMatrices3x3 {
 		Est.CompOvalColorEstandar(igual);
 		igual.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				if(Input00.getText().endsWith("-")||Input01.getText().endsWith("-")||Input02.getText().endsWith("-")||
+						Input10.getText().endsWith("-")||Input11.getText().endsWith("-")||Input12.getText().endsWith("-")||
+						Input20.getText().endsWith("-")||Input21.getText().endsWith("-")||Input22.getText().endsWith("-")) {
+					return;
+				}
+				if(Input00.getText().endsWith(".")||Input01.getText().endsWith(".")||Input02.getText().endsWith(".")||
+						Input10.getText().endsWith(".")||Input11.getText().endsWith(".")||Input12.getText().endsWith(".") ||
+						Input20.getText().endsWith(".")||Input21.getText().endsWith(".")||Input22.getText().endsWith(".")) {
+					return;
+				}
 				if(			Input00.getText().length()!=0&&Input01.getText().length()!=0&&Input02.getText().length()!=0&&
 							Input10.getText().length()==0&&Input11.getText().length()==0&&Input12.getText().length()==0&&
 							Input20.getText().length()==0&&Input21.getText().length()==0&&Input22.getText().length()==0) {		
@@ -1250,6 +1266,8 @@ public class OperacionesConMatrices3x3 {
 		Input20.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Input20.setFocusTraversalKeysEnabled(false);
 		Input20.setBackground(Color.GRAY);
+		
+		
 		Input01.addHover();
 		
 		

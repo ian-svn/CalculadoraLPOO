@@ -409,6 +409,9 @@ public class OperacionesConEcuaciones3x3 {
 				aviso_1.setVisible(false);
 				aviso_2.setVisible(false);
 				usarTextField().setBackground((Color.GRAY));
+				if(usarTextField().getText().endsWith(".")) {
+					
+				}
 				focusMasUno();
 				usarTextField().setBackground(new Color(150,150,150));
 				countPunto=0;
@@ -441,10 +444,17 @@ public class OperacionesConEcuaciones3x3 {
 		JComponentOval punto = new JComponentOval(10);
 		punto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(noAntesDeOperador()) {
+					return;
+				}
+				
 				if(countPunto>0) {
 					return;
 				}
 				textField = usarTextField();
+				if(textField.getText().contains(".")) {
+					return;
+				}
 				textField.setText(textField.getText() + ".");
 				countPunto++;
 			}
@@ -458,6 +468,9 @@ public class OperacionesConEcuaciones3x3 {
 		JComponentOval menos = new JComponentOval(10);
 		menos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(noAntesDeOperador()) {
+					return;
+				}
 				textField = usarTextField();
 				if(countMenos>0) {
 					return;
@@ -562,46 +575,48 @@ public class OperacionesConEcuaciones3x3 {
 			public void actionPerformed(ActionEvent e) {
 				resetAc();
 				try {
-					if(InputA1.getText().length()==0||InputB1.getText().length()==0||InputC1.getText().length()==0||
-						InputA2.getText().length()==0||InputB2.getText().length()==0||InputC2.getText().length()==0||
-						InputA3.getText().length()==0||InputB3.getText().length()==0||InputC3.getText().length()==0||
-						InputTI1.getText().length()==0||InputTI2.getText().length()==0||InputTI3.getText().length()==0
-					) {
-						CalculoResolver.setText("Error de entrada: Rellene todas las posisciones de la ecuacion.");
-						return;
-					}
-					double a1 = Double.parseDouble(InputA1.getText());
-					double a2 = Double.parseDouble(InputA2.getText());
-					double a3 = Double.parseDouble(InputA3.getText());
-					double b1 = Double.parseDouble(InputB1.getText());
-					double b2 = Double.parseDouble(InputB2.getText());
-					double b3 = Double.parseDouble(InputB3.getText());
-					double c1 = Double.parseDouble(InputA1.getText());
-					double c2 = Double.parseDouble(InputB2.getText());
-					double c3 = Double.parseDouble(InputTI3.getText());
-					double TI1 = Double.parseDouble(InputTI1.getText());
-					double TI2 = Double.parseDouble(InputTI2.getText());
-					double TI3 = Double.parseDouble(InputTI3.getText());
+				    if(InputA1.getText().length()==0 || InputB1.getText().length()==0 || InputC1.getText().length()==0 ||
+				       InputA2.getText().length()==0 || InputB2.getText().length()==0 || InputC2.getText().length()==0 ||
+				       InputA3.getText().length()==0 || InputB3.getText().length()==0 || InputC3.getText().length()==0 ||
+				       InputTI1.getText().length()==0 || InputTI2.getText().length()==0 || InputTI3.getText().length()==0) {
+				       
+				        CalculoResolver.setText("Error de entrada: Rellene todas las posisciones de la ecuacion.");
+				        return;
+				    }
+				    
+				    double a1 = Double.parseDouble(InputA1.getText());
+				    double a2 = Double.parseDouble(InputA2.getText());
+				    double a3 = Double.parseDouble(InputA3.getText());
+				    double b1 = Double.parseDouble(InputB1.getText());
+				    double b2 = Double.parseDouble(InputB2.getText());
+				    double b3 = Double.parseDouble(InputB3.getText());
+				    double c1 = Double.parseDouble(InputC1.getText());  // Corregido: usar InputC1.getText() para c1
+				    double c2 = Double.parseDouble(InputC2.getText());  // Corregido: usar InputC2.getText() para c2
+				    double c3 = Double.parseDouble(InputC3.getText());  // Corregido: usar InputC3.getText() para c3
+				    double TI1 = Double.parseDouble(InputTI1.getText());
+				    double TI2 = Double.parseDouble(InputTI2.getText());
+				    double TI3 = Double.parseDouble(InputTI3.getText());
 
-					double determinante = a1 * (b2 * c3 - c2 * b3) - b1 * (a2 * c3 - c2 * a3) + c1 * (a2 * b3 - b2 * a3);
+				    double determinante = a1 * (b2 * c3 - c2 * b3) - b1 * (a2 * c3 - c2 * a3) + c1 * (a2 * b3 - b2 * a3);
 
-					if (determinante != 0) {
-						double determinanteX = TI1 * (b2 * c3 - c2 * b3) - b1 * (TI2 * c3 - c2 * TI3) + c1 * (TI2 * b3 - b2 * TI3);
-						double determinanteY = a1 * (TI2 * c3 - c2 * TI3) - TI1 * (a2 * c3 - c2 * a3) + c1 * (a2 * TI3 - TI2 * a3);
-						double determinanteZ = a1 * (b2 * TI3 - TI2 * b3) - b1 * (a2 * TI3 - TI2 * a3) + TI1 * (a2 * b3 - b2 * a3);
+				    if (Math.abs(determinante) < 1e-10) {  // Si el determinante es aproximadamente cero (considerando tolerancia)
+				        // Soluciones infinitas
+				        CalculoResolver.setText("Infinitas soluciones");
+				    } else {
+				        double determinanteX = TI1 * (b2 * c3 - c2 * b3) - b1 * (TI2 * c3 - c2 * TI3) + c1 * (TI2 * b3 - b2 * TI3);
+				        double determinanteY = a1 * (TI2 * c3 - c2 * TI3) - TI1 * (a2 * c3 - c2 * a3) + c1 * (a2 * TI3 - TI2 * a3);
+				        double determinanteZ = a1 * (b2 * TI3 - TI2 * b3) - b1 * (a2 * TI3 - TI2 * a3) + TI1 * (a2 * b3 - b2 * a3);
 
-						double resultadoX = determinanteX / determinante;
-						double resultadoY = determinanteY / determinante;
-						double resultadoZ = determinanteZ / determinante;
+				        double resultadoX = determinanteX / determinante;
+				        double resultadoY = determinanteY / determinante;
+				        double resultadoZ = determinanteZ / determinante;
 
-						CalculoResolver.setText(String.format("X = %.2f    Y = %.2f    Z = %.2f", resultadoX, resultadoY, resultadoZ));
-					} else {
-						CalculoResolver.setText("No hay solucion unica");
-					}
+				        CalculoResolver.setText(String.format("X = %.2f    Y = %.2f    Z = %.2f", resultadoX, resultadoY, resultadoZ));
+				    }
 				} catch (NumberFormatException ex) {
-					CalculoResolver.setText("Error en la entrada");
+				    CalculoResolver.setText("Error en la entrada");
 				} catch (Exception ex) {
-					CalculoResolver.setText("Ocurrio un error");
+				    CalculoResolver.setText("Ocurrio un error");
 				}
 			}
 		});
@@ -775,5 +790,15 @@ public class OperacionesConEcuaciones3x3 {
 		
 		
 		usarTextField();
+	}
+	
+	public boolean noAntesDeOperador() {
+		
+		String text = usarTextField().getText();
+		
+		if(text.endsWith(".")||text.endsWith("-")) {
+			return true;
+		}
+		return false;
 	}
 }

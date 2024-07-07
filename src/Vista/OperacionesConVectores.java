@@ -19,12 +19,14 @@ import javax.swing.JTextField;
 import java.awt.Color;
 import java.awt.Cursor;
 
-
 public class OperacionesConVectores {
 
 	private JFrame frame;
 	private Estandar Est = new Estandar();
-	private int comaCount = 0;
+	private int countPunto = 0;
+	private int countMenos = 0;
+	private JComponentOval punto = new JComponentOval(10);
+	private JComponentOval menos = new JComponentOval(10);
 	
 	/**
 	 * Launch the application.
@@ -46,7 +48,6 @@ public class OperacionesConVectores {
 	int count=0;
 	ArrayList<Double> vec1 = new ArrayList<>();
 	ArrayList<Double> vec2 = new ArrayList<>();
-	Double numEscalar;
 
 	public void correr() {
 		EventQueue.invokeLater(new Runnable() {
@@ -233,13 +234,17 @@ public class OperacionesConVectores {
 				if(Calculo.getText().length()==0) {
 					return;
 				}
+				if(Calculo.getText().endsWith("-")) {
+					return;
+				}
 				if(!(count>1)) {
 					avisos.setVisible(false);
 				}
 				if(Calculo.getText().charAt(Calculo.getText().length()-1)!= ' ') {
 					Calculo.setText(Calculo.getText() + ", ");
+					countPunto=0;
+					countMenos=0;
 				}
-				comaCount=0;
 			}
 		});
 		siguiente.setForeground(Color.WHITE);
@@ -256,6 +261,10 @@ public class OperacionesConVectores {
 		ac.setText("AC");
 		ac.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(Calculo.getText().contains(".")||Calculo.getText().contains("-")) {
+					countPunto=0;
+					countMenos=0;
+				}
 				Calculo.setText("");
 			}
 		});
@@ -271,6 +280,16 @@ public class OperacionesConVectores {
 		del.setText("DEL");
 		del.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(Calculo.getText().endsWith(", ")) {
+					countPunto=1;
+					countMenos=1;
+				}
+				if(Calculo.getText().endsWith(".")) {
+					countPunto=1;
+				}
+				if(Calculo.getText().endsWith("-")) {
+					countMenos=1;
+				}
 				if(Calculo.getText().length()!=0) {
 					if(Calculo.getText().charAt(Calculo.getText().length()-1)==' ') {
 						Calculo.setText(Calculo.getText().substring(0, Calculo.getText().length() - 2));
@@ -367,23 +386,31 @@ public class OperacionesConVectores {
 		labelVec2.setEditable(false);
 		frame.getContentPane().add(labelVec2);
 		
-
+		menos.setBounds(187, 315, 63, 40);
+		menos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(countMenos>0) {
+					return;
+				}
+				if(Calculo.getText().endsWith(", ")||Calculo.getText().length()==0) {
+					Calculo.setText(Calculo.getText() + "-");
+					countMenos++;
+				}
+			}
+		});
+		menos.setText("-");
+		frame.getContentPane().add(menos);
 		
-		JComponentOval punto = new JComponentOval(10);
-		punto.setBounds(114, 315, 136, 40);
+		punto.setBounds(114, 315, 63, 40);
 		punto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(Calculo.getText().length()==0) {
+				if(Calculo.getText().endsWith("-")) {
 					return;
 				}
-				int dim = Calculo.getText().length();
-				if(Calculo.getText().charAt(dim-1)==' '||Calculo.getText().charAt(dim-1)=='.') {
+				if(countPunto!=0) {
 					return;
 				}
-				if(comaCount!=0) {
-					return;
-				}
-				comaCount++;
+				countPunto++;
 				Calculo.setText(Calculo.getText() + ".");
 			}
 		});
@@ -430,7 +457,7 @@ public class OperacionesConVectores {
 		
 		JComponentOval igual = new JComponentOval(10);
 		igual.setBounds(260, 315, 65, 40);
-		igual.setText("=");
+		igual.setText("Sig.");
 		igual.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -513,6 +540,7 @@ public class OperacionesConVectores {
 					cuatro.setVisible(false);
 					cinco.setVisible(false);
 					seis.setVisible(false);
+					menos.setVisible(false);
 					siete.setVisible(false);
 					ocho.setVisible(false);
 					nueve.setVisible(false);
@@ -534,9 +562,10 @@ public class OperacionesConVectores {
 					labelVec1.setText("Primer vector: " + String.valueOf(vec1));
 					labelVec2.setText("Segundo vector: " + String.valueOf(vec2));
 				}
-
 					Calculo.setText("");
-				
+					countMenos=0;
+					countPunto=0;
+					igual.setText("=");
 				}
 				
 			}
@@ -566,6 +595,7 @@ public class OperacionesConVectores {
 				cero.setVisible(true);
 				ac.setVisible(true);
 				del.setVisible(true);
+				menos.setVisible(true);
 				sumar.setVisible(false);
 				restar.setVisible(false);
 				multiplicacionEscalar.setVisible(false);
@@ -597,6 +627,7 @@ public class OperacionesConVectores {
 							siguiente.setVisible(false);
 							ac.setVisible(false);
 							del.setVisible(false);
+							menos.setVisible(false);
 							avisos_1.setVisible(false);
 							avisos.setVisible(false);
 							sumar.setVisible(true);
@@ -608,9 +639,28 @@ public class OperacionesConVectores {
 							labelVec1.setVisible(true);
 							labelVec2.setVisible(true);
 
+
+							Double numEscalar;
 							numEscalar = Double.valueOf(Calculo.getText());
 							
+							Calculo.setText("");
+							
+							/*
+							List<Double> lista = multiplicacionEscalar(vec2,numEscalar);
+							
+							for(int x = 0 ; x < lista.size() ;x++) {
+								if(x==0) {
+									Calculo.setText(String.valueOf(lista.get(x)));
+									System.out.println(lista.get(x));
+								} else {
+									Calculo.setText(Calculo.getText() + ", " + String.valueOf(lista.get(x)));
+									System.out.println(lista.get(x));
+								}
+							}
+							*/
 							Calculo.setText(String.valueOf(multiplicacionEscalar(vec2,numEscalar)));
+							countMenos=0;
+							countPunto=0;
 						}
 						
 				});
@@ -637,6 +687,7 @@ public class OperacionesConVectores {
 				cero.setVisible(true);
 				ac.setVisible(true);
 				del.setVisible(true);
+				menos.setVisible(true);
 				sumar.setVisible(false);
 				restar.setVisible(false);
 				multiplicacionEscalar.setVisible(false);
@@ -667,6 +718,7 @@ public class OperacionesConVectores {
 							siguiente.setVisible(false);
 							ac.setVisible(false);
 							del.setVisible(false);
+							menos.setVisible(false);
 							avisos_1.setVisible(false);
 							avisos.setVisible(false);
 							sumar.setVisible(true);
@@ -678,12 +730,15 @@ public class OperacionesConVectores {
 							labelVec1.setVisible(true);
 							labelVec2.setVisible(true);
 
-							numEscalar = Double.valueOf(Calculo.getText());
+							Double numEscalar = Double.valueOf(Calculo.getText());
 							
-							// no se que onda pero esto anda y no puedo evitar que tire exepción, bored
+							// no se que onda pero esto anda y no puedo evitar que tire exepciÃ³n, bored
+							
+							
 							
 							Calculo.setText(String.valueOf(multiplicacionEscalar(vec1,numEscalar)));
-							
+							countMenos=0;
+							countPunto=0;
 							/*
 							ArrayList<Double> lista = multiplicacionEscalar(vec1,numEscalar);
 							String text = lista.toString();
@@ -701,7 +756,7 @@ public class OperacionesConVectores {
     public static ArrayList<Double> sumaVectores(ArrayList<Double> v1, ArrayList<Double> v2) {
         ArrayList<Double> resultado = new ArrayList<>(v1.size());
         for (int i = 0; i < v1.size(); i++) {
-            resultado.add(v1.get(i) + v2.get(i));
+            resultado.add(roundToDecimals(v1.get(i) + v2.get(i)));
         }
         return resultado;
     }
@@ -709,7 +764,7 @@ public class OperacionesConVectores {
     public static ArrayList<Double> restaVectores(ArrayList<Double> v1, ArrayList<Double> v2) {
         ArrayList<Double> resultado = new ArrayList<>(v1.size());
         for (int i = 0; i < v1.size(); i++) {
-            resultado.add(v1.get(i) - v2.get(i));
+            resultado.add(roundToDecimals(v1.get(i) - v2.get(i)));
         }
         return resultado;
     }
@@ -717,7 +772,7 @@ public class OperacionesConVectores {
     public static ArrayList<Double> multiplicacionEscalar(ArrayList<Double> v, double escalar) {
         ArrayList<Double> resultado = new ArrayList<>(v.size());
         for (int i = 0; i < v.size(); i++) {
-            resultado.add(v.get(i) * escalar);
+            resultado.add(roundToDecimals(v.get(i) * escalar));
         }
         return resultado;
     }
@@ -727,7 +782,7 @@ public class OperacionesConVectores {
         for (int i = 0; i < v1.size(); i++) {
             resultado += v1.get(i) * v2.get(i);
         }
-        return resultado;
+        return roundToDecimals(resultado);
     }
     
     
@@ -735,11 +790,17 @@ public class OperacionesConVectores {
     public static ArrayList<Double> productoVectorial(ArrayList<Double> v1, ArrayList<Double> v2) {
     	ArrayList<Double> resultado = new ArrayList<>(3);
     	if (v1.size() == 3 && v2.size() == 3) {
-            resultado.add(v1.get(1) * v2.get(2) - v1.get(2) * v2.get(1));
-            resultado.add(v1.get(2) * v2.get(0) - v1.get(0) * v2.get(2));
-            resultado.add(v1.get(0) * v2.get(1) - v1.get(1) * v2.get(0));
+            resultado.add(roundToDecimals(v1.get(1) * v2.get(2) - v1.get(2) * v2.get(1)));
+            resultado.add(roundToDecimals(v1.get(2) * v2.get(0) - v1.get(0) * v2.get(2)));
+            resultado.add(roundToDecimals(v1.get(0) * v2.get(1) - v1.get(1) * v2.get(0)));
             return resultado;
         }
         return resultado;
+    }
+    
+    public static double roundToDecimals(double value) {
+    	int decimals = 3;
+        double scale = Math.pow(10, decimals);
+        return Math.round(value * scale) / scale;
     }
 }

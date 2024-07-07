@@ -462,8 +462,13 @@ public class OperacionesBasicas {
 		Igual.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				borrarError();
+
 				
 				if(Calculo.getText().length()==0) {
+					return;
+				}
+				if(Calculo.getText().endsWith("/0")) {
+					Calculo.setText("No se puede dividir por 0");
 					return;
 				}
 
@@ -515,18 +520,14 @@ public class OperacionesBasicas {
 					}
 					Registro.setVisible(true);
 					hacerRegistro(resultadoFinal);
-					try {
 						if(String.valueOf(resultadoFinal).endsWith(".0")) {
-							Calculo.setText(String.valueOf(resultadoFinal).substring(0,Calculo.getText().length()-1));
+							String ResulTxt = String.valueOf(resultadoFinal);
+							Calculo.setText(ResulTxt.substring(0,ResulTxt.length()-2));
 							return;
 						} else {
 							Calculo.setText(String.valueOf(roundToDecimals(resultadoFinal)));
 							return;
-						}
-					}catch(StringIndexOutOfBoundsException ee){
-							Calculo.setText(String.valueOf(roundToDecimals(resultadoFinal)));
-							return;
-						} 					
+						}				
 					
 				} catch (NumberFormatException err) {
 						count--;
@@ -556,10 +557,12 @@ public class OperacionesBasicas {
 		
 		Registro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 			}
 		});
 		Registro.setText("Resgistro");
-		Registro.setBounds(267, 9, 87, 30);
+		Registro.setVisible(false);
+		Registro.setBounds(267, 11, 87, 28);
 		frame.getContentPane().add(Registro);
 		
 		
@@ -652,6 +655,9 @@ public class OperacionesBasicas {
 	
 	public void borrarError() {
 		if(Calculo.getText().startsWith("Error Sintactico:")) {
+			Calculo.setText("");
+		}
+		if(Calculo.getText().startsWith("No se puede dividir por 0")) {
 			Calculo.setText("");
 		}
 	}

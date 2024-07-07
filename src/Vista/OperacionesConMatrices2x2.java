@@ -386,7 +386,10 @@ public class OperacionesConMatrices2x2 {
 		punto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				textField = usarTextField();
-				
+
+				if(textField.getText().endsWith("-")) {
+					return;
+				}
 				if(textField.getText().length()==0) {
 					return;
 				}
@@ -427,6 +430,10 @@ public class OperacionesConMatrices2x2 {
 				AcHacer();
 				textField = usarTextField();
 				textField.setText("");
+				if(textField.getText().contains(".")||textField.getText().contains("-")) {
+					countPunto=0;
+					countMenos=0;
+				}
 			}
 		});		
 		Ac.setText("AC");
@@ -600,25 +607,7 @@ public class OperacionesConMatrices2x2 {
 				if(InputPE.getText().length()==0) {
 					return;
 				}
-				int flag=0;
-				if(InputPE.getText().contains(".")&&InputPE.getText().contains("-")) {
-					
-					for(int x=0;x<InputPE.getText().length()-1;x++) {
-						int count = 0;
-						if(InputPE.getText().charAt(x)=='.'||InputPE.getText().charAt(x)=='.') {
-							count++;
-						}
-						if(InputPE.getText().charAt(x+1)=='-'||InputPE.getText().charAt(x)=='.') {
-							count++;
-						}
-						if(count==2) {
-							flag = 1;
-						}
-					}
-				}
-				if(flag==1) {
-					return;
-				}
+				
 				if(InputPE.getText().length()==0) {
 					return;
 				}
@@ -887,16 +876,7 @@ public class OperacionesConMatrices2x2 {
 		Est.labelEstandar(LMatriz2);
 		frame.getContentPane().add(LMatriz2);
 		
-		punto.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(countPunto>0) {
-					return;
-				}
-				textField = usarTextField();
-				textField.setText(textField.getText() + ".");
-				countPunto++;
-			}
-		});
+		
 		punto.setText(".");
 		punto.setFont(new Font("Calibri", Font.BOLD, 17));
 		punto.setContentAreaFilled(false);
