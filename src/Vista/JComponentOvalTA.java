@@ -28,7 +28,7 @@ public class JComponentOvalTA extends JTextArea{
 		this.setFont(new Font("Calibri", Font.BOLD, 17));
 		this.setForeground(new Color(255, 255, 255));
 		this.setBackground(Color.GRAY);
-    	this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    	this.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		setValorEsquinaOvalSI(valorEsquinaOvalSI);
 		setValorEsquinaOvalSD(valorEsquinaOvalSD);
 		setValorEsquinaOvalII(valorEsquinaOvalII);

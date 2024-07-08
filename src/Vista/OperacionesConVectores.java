@@ -237,6 +237,9 @@ public class OperacionesConVectores {
 				if(Calculo.getText().endsWith("-")) {
 					return;
 				}
+				if(Calculo.getText().endsWith(".")) {
+					return;
+				}
 				if(!(count>1)) {
 					avisos.setVisible(false);
 				}

@@ -6,10 +6,15 @@ import java.util.List;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
+
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Dimension;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
@@ -18,10 +23,21 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Insets;
 import java.awt.Panel;
+import java.awt.Rectangle;
+
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
+import javax.swing.plaf.basic.BasicScrollBarUI;
 import javax.swing.JToggleButton;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 public class OperacionesBasicas {
 
@@ -78,6 +94,8 @@ public class OperacionesBasicas {
 	 */
 	
 	private void initialize() {
+		
+
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.DARK_GRAY);
 		Est.frameEstandar(frame);
@@ -557,7 +575,74 @@ public class OperacionesBasicas {
 		
 		Registro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				JFrame mainFrame = new JFrame();
+                mainFrame.setSize(400, 400);
+                mainFrame.getContentPane().setBackground(Color.DARK_GRAY);
+                mainFrame.setBounds(100, 100, 380, 425);
+                mainFrame.setLocationRelativeTo(null);
+                mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+                
+                
+                // Crear el JTextArea con 10 filas y 30 columnas
+                JTextArea textArea = new JTextArea(10, 20);
+                textArea.setForeground(Color.WHITE);
+                textArea.setFont(new Font("Calibri", Font.BOLD, 17));
+                textArea.setBackground(Color.DARK_GRAY);
+                
+                textArea.setLineWrap(true); // Habilitar el ajuste de línea
+                textArea.setWrapStyleWord(true); // Ajustar la línea por palabras
+                textArea.setBorder(null);
+                Border border = BorderFactory.createLineBorder(Color.DARK_GRAY);
+                textArea.setBorder(BorderFactory.createCompoundBorder(border,  //tarea es el nombre del TextArea
+                               BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+
+                // Rellenar el JTextArea con el texto de los registros
+                StringBuilder texto = new StringBuilder();
+                for (int x = 0; x < registros.size(); x++) {
+                    texto.append("(").append(x + 1).append(")- ").append(registros.get(x)).append("\n");
+                }
+                textArea.setFocusable(false);
+                textArea.setText(texto.toString());
+
+                // Agregar el JTextArea a un JScrollPane para permitir el desplazamiento
+                JScrollPane scrollPane = new JScrollPane(textArea);
+                scrollPane.setBackground(Color.DARK_GRAY);
+                scrollPane.setBorder(null);
+                scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+                scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+                customizeScrollBar(scrollPane);
+
+                // Crear un panel y agregar el JScrollPane al panel
+                JPanel panel = new JPanel(new BorderLayout());
+                panel.setBackground(Color.DARK_GRAY);
+                panel.add(scrollPane, BorderLayout.CENTER);
+
+                // Crear un botón para cerrar la ventana
+                JComponentOval atrass = new JComponentOval(10);
+                Est.atrasEstandar(atrass);
+                Est.CompOvalColorEstandar(atrass);
+                atrass.setPreferredSize(new Dimension(70, 30));
+                atrass.setText("Atrás");
+                atrass.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        mainFrame.dispose(); // Cerrar la ventana
+                    }
+                });
+
+                // Agregar el botón al panel
+                JPanel buttonPanel = new JPanel();
+                buttonPanel.setBackground(Color.DARK_GRAY);
+                buttonPanel.add(atrass);
+                panel.add(buttonPanel, BorderLayout.SOUTH);
+
+                // Agregar el panel al JFrame
+                mainFrame.add(panel);
+
+                // Hacer visible la ventana
+                mainFrame.setVisible(true);
+			
 			}
 		});
 		Registro.setText("Resgistro");
@@ -667,4 +752,96 @@ public class OperacionesBasicas {
 		// for(String txt : registros) {System.out.println(txt);}
 		
 	}
+	
+    private static void customizeScrollBar(JScrollPane scrollPane) {
+        // Obtener las barras de desplazamiento del JScrollPane
+        JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
+        JScrollBar horizontalScrollBar = scrollPane.getHorizontalScrollBar();
+
+        // Establecer el color y el estilo para la barra de desplazamiento vertical
+        verticalScrollBar.setUI(new BasicScrollBarUI() {
+            @Override
+            protected void paintThumb(Graphics g, JComponent c, Rectangle thumbBounds) {
+                g.setColor(Color.GRAY);
+                g.fillRect(thumbBounds.x, thumbBounds.y, thumbBounds.width, thumbBounds.height);
+            }
+
+            @Override
+            protected void paintTrack(Graphics g, JComponent c, Rectangle trackBounds) {
+                g.setColor(Color.DARK_GRAY);
+                g.fillRect(trackBounds.x, trackBounds.y, trackBounds.width, trackBounds.height);
+            }
+
+            protected void paintIncreaseHighlight(Graphics g, JComponent c, Rectangle increaseButtonBounds) {
+                // No hacer nada para ocultar las flechas
+            }
+
+            protected void paintDecreaseHighlight(Graphics g, JComponent c, Rectangle decreaseButtonBounds) {
+                // No hacer nada para ocultar las flechas
+            }
+
+            @Override
+            protected JButton createDecreaseButton(int orientation) {
+                return new JButton() {
+                    @Override
+                    public Dimension getPreferredSize() {
+                        return new Dimension(0, 0); // Hacer el botón invisible
+                    }
+                };
+            }
+
+            @Override
+            protected JButton createIncreaseButton(int orientation) {
+                return new JButton() {
+                    @Override
+                    public Dimension getPreferredSize() {
+                        return new Dimension(0, 0); // Hacer el botón invisible
+                    }
+                };
+            }
+        });
+
+        // Establecer el color y el estilo para la barra de desplazamiento horizontal
+        horizontalScrollBar.setUI(new BasicScrollBarUI() {
+            @Override
+            protected void paintThumb(Graphics g, JComponent c, Rectangle thumbBounds) {
+                g.setColor(Color.GRAY);
+                g.fillRect(thumbBounds.x, thumbBounds.y, thumbBounds.width, thumbBounds.height);
+            }
+
+            @Override
+            protected void paintTrack(Graphics g, JComponent c, Rectangle trackBounds) {
+                g.setColor(Color.DARK_GRAY);
+                g.fillRect(trackBounds.x, trackBounds.y, trackBounds.width, trackBounds.height);
+            }
+
+            protected void paintIncreaseHighlight(Graphics g, JComponent c, Rectangle increaseButtonBounds) {
+                // No hacer nada para ocultar las flechas
+            }
+
+            protected void paintDecreaseHighlight(Graphics g, JComponent c, Rectangle decreaseButtonBounds) {
+                // No hacer nada para ocultar las flechas
+            }
+
+            @Override
+            protected JButton createDecreaseButton(int orientation) {
+                return new JButton() {
+                    @Override
+                    public Dimension getPreferredSize() {
+                        return new Dimension(0, 0); // Hacer el botón invisible
+                    }
+                };
+            }
+
+            @Override
+            protected JButton createIncreaseButton(int orientation) {
+                return new JButton() {
+                    @Override
+                    public Dimension getPreferredSize() {
+                        return new Dimension(0, 0); // Hacer el botón invisible
+                    }
+                };
+            }
+        });
+    }
 }

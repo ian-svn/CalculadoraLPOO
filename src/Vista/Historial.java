@@ -1,33 +1,30 @@
 package Vista;
 
+import java.awt.Color;
 import java.awt.EventQueue;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JFrame;
-import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
 
-import java.awt.Color;
-import java.awt.Cursor;
-
-public class Historial {
+public class hISTORIAL {
 
 	private JFrame frame;
-	private Estandar Est = new Estandar();
-	private JComponentOvalTA textArea = new JComponentOvalTA(10);
-	private JComponentOval Atras = new JComponentOval(5);
-	private JComponentOval Volver = new JComponentOval(10);
-	
+
 	/**
 	 * Launch the application.
 	 */
+
+	private static List<Double> registros;
+	private Estandar Est = new Estandar();
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Historial window = new Historial();
+					hISTORIAL window = new hISTORIAL(registros);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -35,56 +32,69 @@ public class Historial {
 			}
 		});
 	}
-
+	
 	/**
 	 * Create the application.
 	 */
-	public Historial() {
+	public hISTORIAL(List<Double> registros) {
 		initialize();
 	}
 
-	public void pasarHistorial(List<String> lista) {
-		
-	}
-	
-	public void correr() {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Historial window = new Historial();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	
+	/**
+	 * Initialize the contents of the frame.
+	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.getContentPane().setBackground(Color.DARK_GRAY);
-		frame.setBounds(100, 100, 380, 425);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	JFrame mainFrame = new JFrame();
+    mainFrame.setSize(400, 400);
+    mainFrame.getContentPane().setBackground(Color.DARK_GRAY);
+    mainFrame.setBounds(100, 100, 380, 425);
+    mainFrame.setLocationRelativeTo(null);
+    mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-		frame.getContentPane().add(Atras);
-		Est.atrasEstandar(Atras);
-		
-        textArea.setLineWrap(true); // Hacer que el texto se ajuste automáticamente al tamaño del área
-        textArea.setWrapStyleWord(true); // Hacer que el texto se ajuste por palabras
-		frame.getContentPane().add(textArea);
+    // Crear el JTextArea con 10 filas y 30 columnas
+    JComponentOvalTA textArea = new JComponentOvalTA(30);
+    textArea.setBackground(Color.gray);
+    textArea.setRows(10);
+    textArea.setColumns(20);
+    String texto = "";
+	for(int x=0;x<registros.size();x++) {
+		texto = texto + "(" + (x+1) + ")- " + registros.get(x) + "\n";
+	}
+	textArea.setFocusable(false);
+	textArea.setText(texto);
+    textArea.setLineWrap(true); // Habilitar el ajuste de lÃ­nea
+    textArea.setWrapStyleWord(true); // Ajustar la lÃ­nea por palabras
 
-		Volver.setBounds(87, 283, 39, 29);
-		Volver.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		Volver.setFont(new Font("Calibri", Font.BOLD, 17));
-		Volver.setContentAreaFilled(false);
-		Volver.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				frame.setVisible(false);
-				
-			}
-		});		
-		Volver.addHover();
-		frame.getContentPane().add(Volver);
+    // Agregar el JTextArea a un JScrollPane para permitir el desplazamiento
+    JComponentOvalSP scrollPane = new JComponentOvalSP(30);
+    scrollPane.setBackground(Color.DARK_GRAY);
+    scrollPane.setViewportView(textArea);
+    scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+    scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
+
+    // Crear un panel y agregar el JScrollPane y el botÃ³n al panel
+    JComponentOvalP panel = new JComponentOvalP(30);
+    panel.add(scrollPane);
+    
+    panel.setBackground(Color.DARK_GRAY);
+
+    // Agregar el panel al JFrame
+    mainFrame.add(panel);
+
+    // Hacer visible la ventana principal
+    mainFrame.setVisible(true);
+    
+    JComponentOval atras = new JComponentOval(10);
+	Est.atrasEstandar(atras);
+	Est.CompOvalColorEstandar(atras);
+	atras.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			mainFrame.dispose();
+		}
+	});
+	atras.setBounds(10, 11, 47, 32);
+	mainFrame.getContentPane().add(atras);
 	}
 
 }
